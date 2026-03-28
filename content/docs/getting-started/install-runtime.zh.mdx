@@ -1,0 +1,46 @@
+---
+title: 安装与 runtime 选择
+description: 选择 local 或 Docker runtime，并确认 PSRCHIVE 相关能力能否在当前环境里启用。
+---
+
+PSRUI 的前端和 backend 总是通过 `http://127.0.0.1:8787` 通信。
+
+真正需要你决定的是 backend 在哪里跑。
+
+## local runtime
+
+适合你已经在主机上准备好 Python 与相关依赖的场景。
+
+```bash
+npm install
+cd backend && pip3 install -r requirements.txt && cd ..
+npm run dev
+```
+
+如果主机上没有真实的 `psrchive` bindings，应用会退回 mock provider，图表仍可预览，但高级处理会被禁用。
+
+## Docker runtime
+
+这是当前更推荐的高级处理环境，因为它更稳定地提供 `paz`、`pam`、`pat`、`pac`、`tempo2`。
+
+```bash
+npm run backend:docker:pull
+npm run dev:docker
+```
+
+Docker runtime 会把 `/Users`、`/Volumes`、`/private`、`/tmp` 以相同绝对路径挂进容器，避免 Finder 打开的 archive 路径在容器内失效。
+
+## 什么时候选哪个
+
+- 想最快进入 GUI：先用 `local`
+- 想验证真实 PSRCHIVE CLI 能力：优先用 Docker
+- 想跑 TOA、calibration 或 batch export：优先用 Docker
+
+## 运行前检查
+
+- Node.js 18+
+- Python 3.9+
+- `npm install` 已完成
+- 如果走 Docker：镜像已拉取，Docker / OrbStack 正常
+
+继续阅读：[第一条工作流](./first-workflow)

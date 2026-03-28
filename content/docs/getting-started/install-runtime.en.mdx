@@ -1,0 +1,46 @@
+---
+title: Install and Choose a Runtime
+description: Choose between the local and Docker runtimes and confirm which PSRCHIVE-facing features will be available.
+---
+
+The frontend always talks to the backend at `http://127.0.0.1:8787`.
+
+The real choice is where that backend runs.
+
+## Local runtime
+
+Use this when Python and the required dependencies already exist on your host machine.
+
+```bash
+npm install
+cd backend && pip3 install -r requirements.txt && cd ..
+npm run dev
+```
+
+If real `psrchive` bindings are missing, the app falls back to a mock provider. Charts still render, but advanced processing is disabled.
+
+## Docker runtime
+
+This is the recommended environment for advanced processing because it gives PSRUI more reliable access to `paz`, `pam`, `pat`, `pac`, and `tempo2`.
+
+```bash
+npm run backend:docker:pull
+npm run dev:docker
+```
+
+The container mounts `/Users`, `/Volumes`, `/private`, and `/tmp` back into the container using the same absolute paths, so files opened from Finder still resolve correctly.
+
+## Which one should you choose?
+
+- Choose `local` when you want the fastest path into the GUI.
+- Choose Docker when you want real CLI-backed processing.
+- Prefer Docker for TOA extraction, calibration previews, and batch export validation.
+
+## Pre-flight checklist
+
+- Node.js 18+
+- Python 3.9+
+- frontend dependencies installed
+- Docker or OrbStack working if you plan to use the container runtime
+
+Continue with [First Workflow](./first-workflow).

@@ -1,0 +1,32 @@
+---
+title: 界面与数据流
+description: 从“选择文件”到“更新图表”的端到端数据路径，以及各个主要面板的职责。
+---
+
+PSRUI 的 GUI 可以粗略分成三层：
+
+- 文件与工作区入口
+- 主图表区
+- 右侧 Processing Inspector
+
+## 文件到图表的路径
+
+1. 你在侧边栏或菜单里选中一个 archive
+2. renderer 创建一个 backend session
+3. renderer 并行请求 metadata、profile、waterfall、time-phase、bandpass
+4. 图表数据写入 Jotai 状态
+5. MainPanel 决定当前显示哪一种视图布局
+
+## 为什么 preview 是非破坏的
+
+PSRUI 不直接修改原始 archive。
+
+处理动作会先更新当前 session 的 recipe，再由 backend materialize 一个临时 preview archive，图表永远读的是 preview，而不是源文件本体。
+
+## 主要面板职责
+
+- 侧边栏：文件浏览、最近文件、工作区入口
+- 主图表区：Profile / Freq x Phase / Time x Phase / Bandpass
+- Processing Inspector：驱动 `Zap`、`Pam`、`TOA`、`Cal`、`Batch`
+
+继续阅读：[Processing Inspector](./processing-inspector)

@@ -1,0 +1,44 @@
+---
+title: dspsr
+description: Understand where dspsr sits in the overall observation chain and why it is currently an upstream context page rather than a direct PSRUI feature.
+---
+
+`dspsr` belongs closer to the raw/baseband-to-folded-archive stage of the workflow.
+
+That makes it different from `paz`, `pam`, `pat`, and `pac`, which operate on archives that already exist.
+
+## How to think about it
+
+- PSRUI focuses on archive preview and post-processing
+- `dspsr` is more about producing those archives from earlier-stage input data
+
+That is why `dspsr` appears in the Docker toolchain context around PSRUI but does not currently map to a dedicated tab inside the Processing Inspector.
+
+## Minimal starting point
+
+Command details vary strongly by backend and input format, so the safest first step is usually:
+
+```bash
+dspsr -h
+```
+
+From there, build the real command around your data format, ephemeris, and desired output.
+
+## Typical chain
+
+```text
+raw/baseband data -> dspsr -> folded archive -> PSRCHIVE / PSRUI
+```
+
+> **PSRUI today**: the application does not directly drive `dspsr`. It is better understood as an upstream step that may already have happened before data reaches PSRUI.
+
+## Common pitfalls
+
+- conflating `dspsr` with archive post-processing tools
+- assuming that knowing `paz` and `pam` automatically covers the earlier `dspsr` stage
+- overlooking input-format and backend-specific differences
+
+## Further reading
+
+- [DSPSR documentation](https://dspsr.sourceforge.net/manuals/dspsr/sk-config/)
+- [PSRCHIVE Overview](./psrchive-overview)

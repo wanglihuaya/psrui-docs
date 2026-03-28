@@ -1,0 +1,33 @@
+---
+title: RFI and Calibration
+description: Why RFI handling and calibration matter, and how far PSRUI currently goes in each area.
+---
+
+## What RFI is
+
+RFI is non-astronomical radio interference present in the observation.
+
+On charts, it may appear as:
+
+- persistently bright or dark frequency channels
+- abnormal sub-integrations
+- local corruption of the profile shape
+
+PSRUI's direct v1 entry point is channel-level zapping from the waterfall view.
+
+## What calibration is solving
+
+Polarimetric calibration is about correcting how the instrument response affects the measured polarization quantities.
+
+If calibration is wrong or missing, Stokes-related plots may not reflect the underlying physical signal correctly.
+
+## Why they should not be conflated
+
+- RFI handling is mostly about removing contaminated data
+- calibration is about correcting instrument response
+
+Both can change what you see in the charts, but they serve different purposes.
+
+> **PSRUI today**: RFI handling is limited to channel zapping, and calibration is limited to `pac` previews using existing databases, paths, or solution files.
+
+If you need automatic RFI heuristics, sub-integration zapping, or a calibration-database builder, you still need the CLI workflow or a future PSRUI release.

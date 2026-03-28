@@ -1,0 +1,44 @@
+---
+title: dspsr
+description: 理解 dspsr 在整个观测链路里的位置，以及它为什么更像 PSRUI 的上游背景工具而不是当前 GUI 功能。
+---
+
+`dspsr` 更靠近 raw / baseband 到 folded archive 的前段处理。
+
+和 `paz`、`pam`、`pat`、`pac` 这些“基于已有 archive 再处理”的工具不同，`dspsr` 常用于把更原始的数据流变成后续 archive 分析可消费的结果。
+
+## 你应该如何理解它
+
+- 如果 PSRUI 当前关注的是 archive preview 与后处理
+- 那么 `dspsr` 更接近“把数据先做成 archive”的上游阶段
+
+这也是为什么它会出现在 Docker toolchain 语境里，却没有直接对应的 Processing Inspector 标签页。
+
+## 最小起点
+
+不同后端格式的命令参数差异很大，所以最稳妥的入口通常是先看帮助与格式说明：
+
+```bash
+dspsr -h
+```
+
+再根据你的输入数据格式、ephemeris、目标输出组织具体命令。
+
+## 典型链路
+
+```text
+raw/baseband data -> dspsr -> folded archive -> PSRCHIVE / PSRUI
+```
+
+> **PSRUI 当前支持**：应用并不直接驱动 `dspsr`。它更像是你在进入 PSRUI 之前，可能已经在上游完成的一步。
+
+## 常见坑
+
+- 把 `dspsr` 和 archive 后处理工具混在一起
+- 以为只要会 `paz` / `pam` 就自动理解 `dspsr` 的输入阶段
+- 忽略输入数据格式和后端差异
+
+## 延伸阅读
+
+- [DSPSR documentation](https://dspsr.sourceforge.net/manuals/dspsr/sk-config/)
+- [PSRCHIVE 概览](./psrchive-overview)

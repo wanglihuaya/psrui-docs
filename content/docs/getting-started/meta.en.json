@@ -1,0 +1,5 @@
+{
+  "title": "Getting Started",
+  "pages": ["index", "overview", "install-runtime", "first-workflow"],
+  "defaultOpen": true
+}

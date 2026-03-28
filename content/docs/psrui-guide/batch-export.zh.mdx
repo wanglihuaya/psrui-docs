@@ -1,0 +1,38 @@
+---
+title: Batch 与导出
+description: 了解导出命名、recipe 保存与加载、批量执行时每个文件会经历什么。
+---
+
+`Save Archive` 和 `Batch` 共享同一个核心原则：原始文件不被覆盖，导出的总是新文件。
+
+## Save Archive
+
+- 当前 session recipe 会应用到 preview
+- 导出时 preview 会被复制到目标位置
+- 如果启用了 `dedisperse`，导出还会额外确保保存文件语义与 preview 一致
+
+默认命名类似：
+
+```text
+J0437-4715.processed.ar
+```
+
+## Recipe 保存与加载
+
+- recipe 可以把 zap、pam、calibration、TOA、输出设置一起保存
+- recipe 按 workspace 持久化
+- 重新加载 recipe 后，当前 session preview 会立即同步
+
+## Batch 执行流程
+
+对每个文件，PSRUI 会：
+
+1. 创建临时 processing session
+2. 应用所选 recipe
+3. 导出处理后的 archive 副本
+4. 按需导出 TOA 文本
+5. 把成功或失败写入 batch log
+
+> **常见误解**：当前 batch 是前台顺序执行，不是后台任务队列。
+
+继续阅读：[当前能力与限制](./capabilities-limitations)

@@ -1,0 +1,35 @@
+---
+title: PSRCHIVE Overview
+description: Treat PSRCHIVE as an archive-centric toolbox and understand how PSRUI sits on top of it.
+---
+
+PSRCHIVE is a family of tools and libraries built around pulsar archive processing and analysis.
+
+For PSRUI users, the most useful framing is not to memorize every command. It is to understand that:
+
+- the toolchain is archive-centric
+- many common workflows are composed from smaller CLI steps
+- the GUI exposes only a selected subset of those steps
+
+## The most relevant commands around PSRUI
+
+- `paz`: zapping and excision
+- `pam`: archive transforms such as scrunching, dedispersion, and phase rotation
+- `pat`: TOA extraction
+- `pac`: polarimetric calibration workflows
+
+## Typical chain
+
+```text
+archive -> preview -> zap/pam/pat/pac -> exported archive / TOA text
+```
+
+PSRUI's backend exists in the middle of that chain, handling session materialization, command execution, and result delivery.
+
+> **PSRUI today**: the app focuses on archive preview and post-processing. It does not cover the earlier raw/baseband stage that is more closely associated with `dspsr`.
+
+## Further reading
+
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)
+- [paz / pam](./paz-pam)
+- [pat / pac](./pat-pac)

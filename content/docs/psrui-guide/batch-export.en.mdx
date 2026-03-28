@@ -1,0 +1,38 @@
+---
+title: Batch and Export
+description: Understand export naming, recipe persistence, and what happens to every file during a batch run.
+---
+
+`Save Archive` and `Batch` share one core rule: the source archive is not overwritten; exports always produce new files.
+
+## Save Archive
+
+- the active session recipe is first reflected in the preview
+- export copies that preview to the target location
+- if `dedisperse` is enabled, export additionally ensures the saved file matches the preview semantics
+
+The default naming pattern looks like:
+
+```text
+J0437-4715.processed.ar
+```
+
+## Saving and loading recipes
+
+- recipes can store zap, pam, calibration, TOA, and output settings together
+- recipes are persisted per workspace
+- loading a recipe updates the active session preview immediately
+
+## Batch execution flow
+
+For each selected file, PSRUI:
+
+1. creates a temporary processing session
+2. applies the chosen recipe
+3. exports a processed archive copy
+4. optionally exports a TOA text file
+5. records success or failure in the batch log
+
+> **Common misunderstanding**: the current batch system is a foreground sequential runner, not a background job queue.
+
+Continue with [Capabilities and Limitations](./capabilities-limitations).

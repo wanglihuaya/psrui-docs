@@ -1,0 +1,37 @@
+---
+title: Archive, DM, and TOA
+description: Connect archive data, dispersion, dedispersion, folding, and TOA extraction into one practical mental model.
+---
+
+## What an archive is
+
+In this documentation, an archive is the analysis-ready data container that enters the pulsar-processing workflow after backend acquisition and preliminary preparation.
+
+It commonly contains:
+
+- profile data
+- frequency-channel information
+- sub-integration information
+- metadata such as source name, telescope, centre frequency, bandwidth, and DM
+
+## DM and dedispersion
+
+Dispersion shifts the arrival time across frequency.
+
+Without dedispersion, the same pulse is smeared across channels and profile alignment degrades. That is why `dedisperse` is one of the highest-frequency controls in PSRUI's `Pam` tab.
+
+## What folding does
+
+Folding uses the pulsar period to stack repeated rotations in phase, making stable signal structure clearer and random noise relatively less dominant.
+
+Many profile and TOA workflows assume data that has already been folded into a sensible phase structure.
+
+## Why TOA extraction needs a template
+
+TOA extraction is not just "find the peak time."
+
+A common workflow matches an observed profile against a template profile, then estimates phase shift and uncertainty. PSRUI's current TOA workflow wraps that `pat`-style approach.
+
+> **PSRUI today**: you can choose a template, run `pat`, and inspect a visual residual preview in the GUI.
+
+Continue with [pat / pac](../toolchain/pat-pac).

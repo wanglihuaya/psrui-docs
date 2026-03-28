@@ -1,0 +1,39 @@
+---
+title: 当前能力与限制
+description: 区分已经实现的能力、v1 的有意范围收缩，以及仍未完成的 roadmap 项。
+---
+
+## 已实现
+
+- archive metadata 与四类主要图表预览
+- session-based 非破坏处理 preview
+- 频道级 RFI zapping
+- `pam` 实时控制：`dedisperse`、`tscrunch`、`fscrunch`、`bscrunch`、`phase rotate`
+- `pat` TOA 提取与 residual preview
+- `pac` calibration preview
+- workspace 级 batch recipe 保存、加载和顺序执行
+
+## 明确属于 v1 的边界
+
+- zapping 只到 channel 级别
+- TOA 只到 `pat` + visual residual
+- calibration 假设已有 database/path/solution
+- batch 还不是后台队列
+
+## 尚未完成
+
+- 完整 `tempo2` timing residual 工作流
+- 自动化 RFI heuristics UI，例如 `paz -r`、`paz -L`
+- subint / phase-bin zapping
+- 从原始 calibrator 生成 calibration database
+- 带 retry/history 的 batch queue
+
+## 如何读这些边界
+
+如果一个页面标记为“上游工具能力”，并不代表 GUI 已经暴露该能力。
+
+最稳妥的判断方法是：
+
+- 先看本页能力列表
+- 再看对应工具页中的 `PSRUI 当前支持`
+- 最后再决定是否需要回到命令行工作流

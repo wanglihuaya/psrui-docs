@@ -1,0 +1,43 @@
+---
+title: tempo2
+description: Put `.par`, `.tim`, simple examples, plugin-oriented usage, and the current PSRUI boundary in one place.
+---
+
+`tempo2` sits in the timing-analysis stage after TOAs have already been generated.
+
+If `pat` is the step that produces TOAs, `tempo2` is the step that uses those TOAs together with a timing model to analyse residuals.
+
+## Minimal inputs
+
+- `.par`: the timing model
+- `.tim`: the TOA file
+
+PSRUI's current `TOA` tab can produce text that is suitable for entering this stage, but it does not yet complete the full timing-residual workflow for you.
+
+## Simple example
+
+```bash
+tempo2 -f J0437.par J0437.tim
+tempo2 -gr plk -f J0437.par J0437.tim
+```
+
+The first is the minimal entry point. The second shows the plugin-oriented design of `tempo2`, where different `-gr` values select different graphical or output modes.
+
+## What to remember
+
+- `tempo2` is about timing models and residuals
+- `.tim` alone is not enough; you still need a `.par`
+- generating `tempo2`-format TOAs does not mean the residual-analysis workflow is finished
+
+> **PSRUI today**: the GUI can run `pat` and export `tempo2`-format TOAs. Full `tempo2` residual plotting remains on the roadmap.
+
+## Common pitfalls
+
+- treating `pat` output as the final `tempo2` result
+- focusing only on TOA text while ignoring problems in the timing model itself
+- expecting PSRUI to already render residuals versus epoch or frequency, which it does not yet do
+
+## Further reading
+
+- [Tempo2 User Manual](https://www.jb.man.ac.uk/~pulsar/Resources/tempo2_manual.pdf)
+- [pat / pac](./pat-pac)

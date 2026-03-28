@@ -1,0 +1,32 @@
+---
+title: PSRUI 是什么
+description: 了解 PSRUI 的定位、典型用户和它与上游命令行工具的关系。
+---
+
+PSRUI 是一个围绕 pulsar archive 工作流构建的桌面应用。
+
+它把常见的 PSRCHIVE 相关处理步骤放进图形界面里，用交互式图表替代传统 X11 / PGPLOT 预览方式，同时保留对上游命令行工具语义的尊重。
+
+## 典型用户
+
+- 想快速浏览 `.ar` / `.fits` 数据的研究者或学生
+- 需要把 waterfall、profile、time-phase、bandpass 放到同一界面里交替查看的人
+- 需要在 GUI 中做小规模 zap、scrunch、TOA、calibration preview，再把结果导出的用户
+
+## 它不是谁的替代品
+
+- 它不是整个 PSRCHIVE manual 的图形化壳层
+- 它目前不负责 raw baseband 数据到 folded archive 的前段处理，这通常更接近 `dspsr`
+- 它目前不提供完整的 `.par + .tim + tempo2 residuals` 图形分析链路
+
+## 你应该怎样理解它和上游工具的关系
+
+- PSRUI 负责 GUI、session preview、状态管理与批量 recipe
+- backend 负责把 GUI 状态翻译成 `paz`、`pam`、`pat`、`pac` 等命令
+- 上游工具仍然是数据变换的真实执行者
+
+继续阅读：
+
+- [安装与 runtime 选择](./install-runtime)
+- [PSRUI 使用](../psrui-guide)
+- [工具链参考](../toolchain)

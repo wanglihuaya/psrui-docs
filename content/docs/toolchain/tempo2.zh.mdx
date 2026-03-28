@@ -1,0 +1,43 @@
+---
+title: tempo2
+description: 把 `.par`、`.tim`、simple example、plugin 思维和 PSRUI 当前边界放到同一个入口里。
+---
+
+`tempo2` 处在“TOA 已经生成之后”的 timing 分析阶段。
+
+如果说 `pat` 更像是“把 TOA 产出来”，那么 `tempo2` 更像是“拿 TOA 和 timing model 去做 residual 分析”。
+
+## 最小输入
+
+- `.par`：timing model
+- `.tim`：TOA 文件
+
+PSRUI 当前的 `TOA` 标签页可以产出适合进入这一步的文本，但不会替你完成整条 timing residual 链路。
+
+## simple example
+
+```bash
+tempo2 -f J0437.par J0437.tim
+tempo2 -gr plk -f J0437.par J0437.tim
+```
+
+第一条更接近批处理入口，第二条展示了 `tempo2` 的 plugin / graphical interface 思维：不同 `-gr` 对应不同输出或交互方式。
+
+## 你应该记住什么
+
+- `tempo2` 的重点在 timing model 与 residual
+- `.tim` 只是输入之一，还需要 `.par`
+- 产出 `tempo2` 格式 TOA 不代表 residual workflow 已经完成
+
+> **PSRUI 当前支持**：GUI 可以跑 `pat` 并导出 `tempo2` 格式 TOA；完整的 `tempo2` residual plotting 仍在 roadmap 上。
+
+## 常见坑
+
+- 把 `pat` 的输出误当成 `tempo2` 的最终结果
+- 忽略 model 本身的问题，只盯着 GUI 里的 TOA 文本
+- 期望 PSRUI 直接展示 epoch / frequency residual 图，这目前尚未实现
+
+## 延伸阅读
+
+- [Tempo2 User Manual](https://www.jb.man.ac.uk/~pulsar/Resources/tempo2_manual.pdf)
+- [pat / pac](./pat-pac)

@@ -1,0 +1,54 @@
+---
+title: paz / pam
+description: 认识 zapping 与 archive 变换这两个最直接映射到 PSRUI GUI 的命令。
+---
+
+## `paz` 做什么
+
+`paz` 更偏向 excision / zapping。
+
+在 PSRUI 当前语境里，它最直接对应的是 channel-level RFI 处理。
+
+示意命令：
+
+```bash
+paz -z 120 observation.ar
+paz -z 120,121,122 observation.ar
+```
+
+## `pam` 做什么
+
+`pam` 更偏向 archive 变换。
+
+在 PSRUI 当前界面里，最常见的是：
+
+```bash
+pam -D observation.ar
+pam -t 4 -f 2 observation.ar
+pam -r 0.125 observation.ar
+```
+
+这些分别大致对应：
+
+- `dedisperse`
+- `tscrunch` / `fscrunch`
+- `phase rotate`
+
+## 在 PSRUI 里的典型工作流
+
+```text
+open archive -> waterfall zapping -> pam preview -> export new archive
+```
+
+> **PSRUI 当前支持**：GUI 已暴露 channel zapping 与常用 `pam` 变换，但没有自动 `paz -r` / `paz -L` 之类 heuristic UI。
+
+## 常见坑
+
+- `-m` 会修改文件；PSRUI 通过临时 preview 文件规避直接改原始 archive
+- scrunch 过度会让后续诊断信息丢失
+- dedisperse 是否应该先开，取决于你当前是在做诊断还是在准备导出/TOA
+
+## 延伸阅读
+
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)
+- [Processing Inspector](../psrui-guide/processing-inspector)

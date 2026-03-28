@@ -1,12 +1,14 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { appName, docsRoute, getLocalizedPath, gitConfig } from './shared';
 
-export function baseOptions(): BaseLayoutProps {
+export function baseOptions(locale?: string): BaseLayoutProps {
+  const githubUrl = gitConfig.repoUrl;
+
   return {
     nav: {
-      // JSX supported
       title: appName,
+      url: getLocalizedPath(docsRoute, locale),
     },
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
+    ...(githubUrl ? { githubUrl } : {}),
   };
 }

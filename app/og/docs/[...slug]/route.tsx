@@ -1,3 +1,5 @@
+import { i18n } from '@/lib/i18n';
+import { appName } from '@/lib/shared';
 import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from '@takumi-rs/image-response';
@@ -7,11 +9,11 @@ export const revalidate = false;
 
 export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...slug]'>) {
   const { slug } = await params;
-  const page = source.getPage(slug.slice(0, -1));
+  const page = source.getPage(slug.slice(0, -1), i18n.defaultLanguage);
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site="My App" />,
+    <DefaultImage title={page.data.title} description={page.data.description} site={appName} />,
     {
       width: 1200,
       height: 630,
@@ -21,8 +23,10 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
 }
 
 export function generateStaticParams() {
-  return source.getPages().map((page) => ({
-    lang: page.locale,
-    slug: getPageImage(page).segments,
-  }));
+  return source
+    .generateParams()
+    .filter((params) => params.lang === i18n.defaultLanguage)
+    .map(({ slug }) => ({
+      slug: getPageImage(source.getPage(slug, i18n.defaultLanguage)!).segments,
+    }));
 }

@@ -1,0 +1,41 @@
+---
+title: 第一条工作流
+description: 从打开 archive 到查看图表、调 Processing Inspector，再到导出处理结果的最短路径。
+---
+
+这是最推荐的新手演练路径。
+
+## 1. 打开一个 archive
+
+- 用侧边栏、菜单或拖拽打开 `.ar` / `.fits`
+- 应用会为当前文件创建一个 backend session
+- profile、waterfall、time-phase、bandpass 预览会从 session preview 并行加载
+
+## 2. 看懂基础图表
+
+- `Profile`：先确认脉冲轮廓是否合理
+- `Freq x Phase`：快速检查频率方向上的 RFI 或形状异常
+- `Time x Phase`：看时间方向上的稳定性
+- `Bandpass`：看各频道平均强度是否异常
+
+## 3. 打开 Processing Inspector
+
+点图表工具栏里的 `Processing` 按钮。
+
+建议顺序：
+
+- 先用 `Zap` 做频道级 RFI 剔除
+- 再在 `Pam` 里尝试 `dedisperse`、`tscrunch`、`fscrunch`
+- 需要 TOA 时再进入 `TOA`
+
+## 4. 导出结果
+
+- `Save Archive` 会导出处理后的新文件，不会覆盖原始 archive
+- `Batch` 可以把当前 recipe 保存下来，再批量应用到多个文件
+
+> **PSRUI 当前支持**：session preview 是非破坏的；只有导出动作会生成新文件。
+
+下一步建议读：
+
+- [Processing Inspector](../psrui-guide/processing-inspector)
+- [Archive、DM 与 TOA](../pulsar-basics/archive-dm-toa)

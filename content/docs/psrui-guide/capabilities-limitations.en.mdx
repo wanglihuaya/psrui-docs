@@ -1,0 +1,39 @@
+---
+title: Capabilities and Limitations
+description: Separate what is implemented, what is intentionally limited in v1, and what is still on the roadmap.
+---
+
+## Implemented today
+
+- archive metadata and the four main chart previews
+- non-destructive session-based processing previews
+- channel-level RFI zapping
+- live `pam` controls for `dedisperse`, `tscrunch`, `fscrunch`, `bscrunch`, and `phase rotate`
+- `pat` TOA extraction with a residual preview
+- `pac` calibration previews
+- workspace-scoped batch recipe save/load/run support
+
+## Intentional v1 boundaries
+
+- zapping stops at the channel level
+- TOA stays at `pat` plus a visual residual
+- calibration assumes existing databases, paths, or solution files
+- batch execution is not yet a background queue
+
+## Not implemented yet
+
+- a full `tempo2` timing-residual workflow
+- automatic RFI heuristics UI such as `paz -r` and `paz -L`
+- sub-integration and phase-bin zapping
+- building calibration databases from raw calibrator observations
+- a batch queue with retry and history
+
+## How to interpret those boundaries
+
+If a page is labeled as an upstream tool capability, that does not mean the GUI already exposes it.
+
+The safest reading order is:
+
+- check this page for current capabilities
+- check the matching tool page for the `PSRUI today` note
+- then decide whether you need to drop back to the CLI workflow

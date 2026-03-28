@@ -1,0 +1,45 @@
+---
+title: Processing Inspector
+description: Zap、Pam、TOA、Cal、Batch 五个标签页分别负责什么，以及它们如何映射到 backend workflow。
+---
+
+Processing Inspector 是 PSRUI 的核心处理面板。
+
+它不会直接改图表，而是改当前 session 的 recipe，然后刷新 preview。
+
+## Zap
+
+- 面向 `Freq x Phase` waterfall
+- 支持频道点击和框选
+- v1 只覆盖 channel zapping
+
+## Pam
+
+- 负责 `dedisperse`
+- 负责 `tscrunch`、`fscrunch`、`bscrunch`
+- 负责 `phase rotate`
+
+这些变换会先影响 preview；导出时会按同一 recipe 应用到新文件。
+
+## TOA
+
+- 选择 template archive
+- 选择 `PGS`、`GIS`、`PIS`、`SIS`、`ZPS`
+- 选择 `tempo2` 或 `parkes` 输出格式
+- 查看 raw `pat` 输出与 residual preview
+
+> **PSRUI 当前支持**：这是一个基于 `pat` 的 v1 工作流，还不是完整的 `tempo2` timing residual 分析界面。
+
+## Cal
+
+- 提供 calibration search path、`database.txt` 或 solution file
+- 预览 `pac` 命令和日志
+- 更新当前 session preview
+
+## Batch
+
+- 保存/加载 recipe
+- 设定 archive 输出命名与目录
+- 可选导出 TOA 文本
+
+继续阅读：[Batch 与导出](./batch-export)

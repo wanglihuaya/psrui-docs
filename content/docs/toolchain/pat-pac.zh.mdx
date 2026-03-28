@@ -1,0 +1,44 @@
+---
+title: pat / pac
+description: 把 TOA 提取与 calibration preview 这两条当前最接近 PSRUI 高级处理界面的命令链路写清楚。
+---
+
+## `pat` 做什么
+
+`pat` 用 template profile 与观测 profile 做匹配，输出 TOA 相关文本结果。
+
+示意命令：
+
+```bash
+pat -A PGS -s template.ar -f tempo2 observation.ar
+```
+
+在 PSRUI 里，你会看到：
+
+- template 选择
+- 算法选择
+- `tempo2` / `parkes` 输出格式
+- raw `pat` 输出
+- visual residual preview
+
+## `pac` 做什么
+
+`pac` 处理偏振 calibration 相关工作流。
+
+PSRUI 当前只暴露“基于已有资产做 preview”的那部分能力，而不是完整 database builder。
+
+## 在 PSRUI 里的典型工作流
+
+```text
+archive preview -> choose template / calibration asset -> run pat or pac preview -> inspect output
+```
+
+> **PSRUI 当前支持**：`pat` 已进入 GUI；`pac` 目前只到 preview 命令与日志层，不负责从 raw calibrator 建库。
+
+## 常见坑
+
+- template 选得不好，TOA 质量就会一起下降
+- calibration 资产路径和搜索路径很容易混淆
+- `pat` 输出为 `tempo2` 格式，并不等于已经做完 `tempo2` residual 分析
+
+继续阅读：[tempo2](./tempo2)

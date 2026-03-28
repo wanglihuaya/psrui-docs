@@ -1,0 +1,32 @@
+---
+title: What PSRUI Is
+description: Understand the role of PSRUI, who it is for, and how it relates to upstream CLI tools.
+---
+
+PSRUI is a desktop application built around archive-centric pulsar workflows.
+
+It brings common PSRCHIVE-facing operations into a GUI, uses interactive charts instead of the classic X11 / PGPLOT workflow, and keeps the upstream command-line semantics visible rather than hiding them completely.
+
+## Typical users
+
+- researchers or students who want to inspect `.ar` / `.fits` data quickly
+- people who need profile, waterfall, time-phase, and bandpass views in one interface
+- users who want to do light zapping, scrunching, TOA extraction, and calibration previews in a GUI before exporting results
+
+## What it does not try to replace
+
+- it is not a GUI wrapper for the full PSRCHIVE manual
+- it does not currently cover the raw-baseband to folded-archive stage that is more closely associated with `dspsr`
+- it does not yet provide a complete `.par + .tim + tempo2 residual` analysis workflow
+
+## How to think about PSRUI versus upstream tools
+
+- PSRUI owns the GUI, session previews, state management, and batch recipes
+- the backend translates GUI state into `paz`, `pam`, `pat`, and `pac` commands
+- upstream tools still perform the real data transformations
+
+Continue with:
+
+- [Install and Choose a Runtime](./install-runtime)
+- [PSRUI Guide](../psrui-guide)
+- [Toolchain Reference](../toolchain)

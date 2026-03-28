@@ -1,0 +1,32 @@
+---
+title: Interface and Data Flow
+description: The end-to-end path from choosing a file to updating charts, plus the responsibilities of the main UI areas.
+---
+
+The PSRUI interface can be understood as three layers:
+
+- file and workspace entry points
+- the main chart area
+- the Processing Inspector on the right
+
+## File-to-chart flow
+
+1. you select an archive from the sidebar or the menu
+2. the renderer creates a backend session
+3. the renderer requests metadata, profile, waterfall, time-phase, and bandpass in parallel
+4. the results are stored in Jotai atoms
+5. MainPanel decides which chart layout to render
+
+## Why previews are non-destructive
+
+PSRUI does not edit the source archive directly.
+
+Processing controls update the active session recipe, the backend materializes a temporary preview archive, and charts always read from that preview instead of the original file.
+
+## Responsibilities of the main panels
+
+- Sidebar: file browsing, recent files, workspace entry points
+- Main chart area: Profile / Freq x Phase / Time x Phase / Bandpass
+- Processing Inspector: drives `Zap`, `Pam`, `TOA`, `Cal`, and `Batch`
+
+Continue with [Processing Inspector](./processing-inspector).

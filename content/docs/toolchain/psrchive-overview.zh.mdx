@@ -1,0 +1,35 @@
+---
+title: PSRCHIVE 概览
+description: 把 PSRCHIVE 看成 archive-centric 工具箱，并理解 PSRUI 当前是如何站在它之上的。
+---
+
+PSRCHIVE 是一组围绕 pulsar archive 处理与分析的工具和库。
+
+对于 PSRUI 用户来说，最重要的理解不是“记住每个命令”，而是先知道：
+
+- 它是 archive-centric 的
+- 许多常见操作都能拆成小命令组合
+- GUI 只是把这些能力有选择地暴露出来
+
+## 在 PSRUI 周围最常见的命令
+
+- `paz`：zap / excision
+- `pam`：archive 变换，例如 scrunch、dedisperse、phase rotate
+- `pat`：TOA extraction
+- `pac`：polarimetric calibration 相关处理
+
+## 典型链路
+
+```text
+archive -> preview -> zap/pam/pat/pac -> exported archive / TOA text
+```
+
+PSRUI backend 正是在这条链路里做 session materialization、命令调用与结果回传。
+
+> **PSRUI 当前支持**：它主要覆盖 archive 预览与后处理，不覆盖 `dspsr` 那类更靠前的 raw/baseband 处理阶段。
+
+## 延伸阅读
+
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)
+- [paz / pam](./paz-pam)
+- [pat / pac](./pat-pac)

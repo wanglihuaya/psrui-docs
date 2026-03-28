@@ -1,0 +1,54 @@
+---
+title: paz / pam
+description: Understand zapping and archive transforms, the two CLI layers most directly mirrored by the PSRUI GUI.
+---
+
+## What `paz` does
+
+`paz` is primarily about excision and zapping.
+
+In PSRUI's current workflow, it maps most directly to channel-level RFI handling.
+
+Illustrative commands:
+
+```bash
+paz -z 120 observation.ar
+paz -z 120,121,122 observation.ar
+```
+
+## What `pam` does
+
+`pam` is primarily about archive transforms.
+
+In the current GUI, the most common operations correspond to:
+
+```bash
+pam -D observation.ar
+pam -t 4 -f 2 observation.ar
+pam -r 0.125 observation.ar
+```
+
+Those roughly map to:
+
+- `dedisperse`
+- `tscrunch` / `fscrunch`
+- `phase rotate`
+
+## Typical workflow inside PSRUI
+
+```text
+open archive -> waterfall zapping -> pam preview -> export new archive
+```
+
+> **PSRUI today**: the GUI exposes channel zapping and the common `pam` transforms, but not heuristic interfaces for automatic `paz -r`, `paz -L`, or similar helpers.
+
+## Common pitfalls
+
+- `-m` mutates files; PSRUI avoids this by operating on temporary preview copies
+- over-scrunching can hide useful diagnostic information
+- whether to enable dedispersion early depends on whether you are still diagnosing the observation or preparing output/TOA workflows
+
+## Further reading
+
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)
+- [Processing Inspector](../psrui-guide/processing-inspector)

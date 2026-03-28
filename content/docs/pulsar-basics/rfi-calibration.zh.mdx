@@ -1,0 +1,33 @@
+---
+title: RFI 与 calibration
+description: 为什么要做 RFI 处理和 calibration，以及 PSRUI 当前支持到哪一层。
+---
+
+## RFI 是什么
+
+RFI 指观测数据中的非天体射电干扰。
+
+在图上，它可能表现为：
+
+- 某些频率通道长期偏亮或偏暗
+- 某些子积分异常
+- profile 形状被局部污染
+
+PSRUI 当前最直接的入口是 channel-level zapping，也就是在 waterfall 上点击或框选频道。
+
+## Calibration 在解决什么
+
+polarimetric calibration 关注的是仪器响应如何影响观测到的偏振量。
+
+如果 calibration 不合适，你看到的 Stokes 相关结果可能会偏离真实物理含义。
+
+## 为什么两者不能混为一谈
+
+- RFI 更多是“去掉受污染的数据”
+- calibration 更多是“修正仪器响应”
+
+它们都可能改变图表，但目标不同。
+
+> **PSRUI 当前支持**：RFI 只做到 channel zapping；calibration 只做到基于已有 database/path/solution 的 `pac` preview。
+
+如果你需要自动 RFI heuristics、subint zapping 或 calibration database builder，请回到命令行工作流或等待后续版本。

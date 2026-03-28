@@ -1,0 +1,39 @@
+---
+title: Archive、DM 与 TOA
+description: 把 archive 数据、色散、dedispersion、folding 与 TOA 提取连成一条理解链。
+---
+
+## Archive 是什么
+
+在这里可以把 archive 理解成“已经过一定程度接收机/后端处理后，适合进入脉冲星分析链路的数据容器”。
+
+常见内容包括：
+
+- profile 数据
+- 频率通道信息
+- 子积分信息
+- 源名、望远镜、中心频率、带宽、DM 等元数据
+
+## DM 与 dedispersion
+
+色散会让不同频率的信号到达时间不同。
+
+如果不做 dedispersion，同一脉冲在频率方向上会被拖开，profile 对齐也会变差。
+
+这就是为什么 PSRUI 在 `Pam` 里把 `dedisperse` 作为高频操作之一。
+
+## Folding 在做什么
+
+folding 会利用脉冲星周期，把周期性信号沿相位堆叠起来，让稳定成分更明显、随机噪声相对被压低。
+
+很多 profile 与 TOA 分析都默认建立在“已经折叠到合理相位结构”的数据上。
+
+## TOA 为什么需要 template
+
+TOA 并不是“找最大值所在时间”这么简单。
+
+更常见的做法是用 template profile 与观测 profile 做匹配，再估计相位偏移和不确定度。PSRUI 当前的 TOA 工作流就是围绕 `pat` 做这件事。
+
+> **PSRUI 当前支持**：可以在 GUI 中选 template、跑 `pat`，并查看 visual residual preview。
+
+继续阅读：[pat / pac](../toolchain/pat-pac)

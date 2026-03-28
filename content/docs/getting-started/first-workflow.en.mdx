@@ -1,0 +1,41 @@
+---
+title: First Workflow
+description: The shortest path from opening an archive to inspecting charts, adjusting the Processing Inspector, and exporting results.
+---
+
+This is the best first exercise for new users.
+
+## 1. Open an archive
+
+- open a `.ar` or `.fits` file from the sidebar, the menu, or drag and drop
+- PSRUI creates a backend session for the active file
+- profile, waterfall, time-phase, and bandpass previews are fetched from the session preview in parallel
+
+## 2. Read the basic charts
+
+- `Profile`: confirm the pulse shape looks sensible
+- `Freq x Phase`: look for frequency-dependent RFI or structure changes
+- `Time x Phase`: check stability across sub-integrations
+- `Bandpass`: inspect unusual channel averages
+
+## 3. Open the Processing Inspector
+
+Use the `Processing` button in the chart toolbar.
+
+Recommended order:
+
+- start with `Zap` for channel-level RFI excision
+- continue with `Pam` for `dedisperse`, `tscrunch`, and `fscrunch`
+- move to `TOA` only when you already know which template you want
+
+## 4. Export results
+
+- `Save Archive` always writes a new processed file
+- `Batch` lets you save the current recipe and reuse it across many files
+
+> **PSRUI today**: session previews are non-destructive. Only export operations write new files.
+
+Recommended next pages:
+
+- [Processing Inspector](../psrui-guide/processing-inspector)
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)

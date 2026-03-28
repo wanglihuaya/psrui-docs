@@ -1,0 +1,45 @@
+---
+title: Processing Inspector
+description: What the Zap, Pam, TOA, Cal, and Batch tabs do and how they map to the backend workflow.
+---
+
+The Processing Inspector is the center of PSRUI's processing workflow.
+
+It does not edit charts directly. Instead, it updates the active session recipe and refreshes the preview.
+
+## Zap
+
+- operates on the `Freq x Phase` waterfall
+- supports single-channel clicks and box selection
+- v1 is limited to channel zapping
+
+## Pam
+
+- controls `dedisperse`
+- controls `tscrunch`, `fscrunch`, and `bscrunch`
+- controls `phase rotate`
+
+These transforms first affect the preview. Export then applies the same recipe to a new output file.
+
+## TOA
+
+- choose a template archive
+- choose `PGS`, `GIS`, `PIS`, `SIS`, or `ZPS`
+- choose `tempo2` or `parkes` output format
+- inspect raw `pat` output and a residual preview
+
+> **PSRUI today**: this is a `pat`-based v1 workflow, not yet a full `tempo2` timing-residual interface.
+
+## Cal
+
+- accepts a calibration search path, `database.txt`, or a solution file
+- previews the `pac` command and log output
+- updates the active session preview
+
+## Batch
+
+- save and load recipes
+- define archive naming and output directories
+- optionally export TOA text alongside archives
+
+Continue with [Batch and Export](./batch-export).

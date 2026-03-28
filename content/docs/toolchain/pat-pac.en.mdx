@@ -1,0 +1,44 @@
+---
+title: pat / pac
+description: Clarify the TOA-extraction and calibration-preview chains that are closest to PSRUI's advanced-processing UI.
+---
+
+## What `pat` does
+
+`pat` matches an observed profile against a template profile and emits TOA-related text output.
+
+Illustrative command:
+
+```bash
+pat -A PGS -s template.ar -f tempo2 observation.ar
+```
+
+Inside PSRUI, that corresponds to:
+
+- template selection
+- algorithm selection
+- `tempo2` or `parkes` output format
+- raw `pat` output
+- a visual residual preview
+
+## What `pac` does
+
+`pac` handles polarization-calibration workflows.
+
+PSRUI currently exposes only the "preview with existing assets" layer, not the full calibration-database builder workflow.
+
+## Typical PSRUI workflow
+
+```text
+archive preview -> choose template / calibration asset -> run pat or pac preview -> inspect output
+```
+
+> **PSRUI today**: `pat` is already exposed in the GUI. `pac` is currently limited to preview commands and logs rather than raw-calibrator database construction.
+
+## Common pitfalls
+
+- poor template choice produces poor TOA results
+- calibration search paths and concrete asset paths are easy to confuse
+- emitting `tempo2`-format TOAs is not the same as completing a full `tempo2` residual-analysis workflow
+
+Continue with [tempo2](./tempo2).

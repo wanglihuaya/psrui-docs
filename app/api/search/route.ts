@@ -2,6 +2,10 @@ import { source } from '@/lib/source';
 import { createFromSource } from 'fumadocs-core/search/server';
 
 export const { GET } = createFromSource(source, {
-  // https://docs.orama.com/docs/orama-js/supported-languages
-  language: 'english',
+  localeMap: {
+    // Orama does not ship a native zh tokenizer. Use the English tokenizer as
+    // a stable fallback so Chinese-locale pages remain searchable for mixed
+    // ASCII terms such as command names and file extensions.
+    zh: 'english',
+  },
 });
