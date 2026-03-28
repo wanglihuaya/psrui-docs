@@ -1,0 +1,66 @@
+---
+title: Interstellar Medium Effects
+description: Chapter 4 condensed into the propagation ideas that matter most for pulsar observing and data interpretation.
+---
+
+This chapter is one of the most practically useful parts of the whole book.
+
+It explains why pulsars are simultaneously difficult observational targets and unusually powerful probes of the interstellar medium.
+
+## The indispensable propagation quantities
+
+The chapter starts from the simplest integrated line-of-sight measures:
+
+$$
+\mathrm{DM} = \int_0^d n_e\,dl
+$$
+
+$$
+\mathrm{RM} = 0.81 \int_0^d n_e B_{\parallel}\,dl
+$$
+
+Together, they turn pulse arrival delays and polarisation rotation into information about free-electron content and large-scale magnetic-field structure.
+
+For timing and search work, the main operational lesson is that dispersion delay scales strongly with frequency:
+
+$$
+\Delta t \propto \mathrm{DM}\,\nu^{-2}
+$$
+
+That single proportionality explains a large fraction of pulsar observing practice.
+
+## Why the turbulent medium matters just as much
+
+The chapter then moves from a smooth plasma to a turbulent one. That is where scattering, scintillation, decorrelation bandwidths, scintillation timescales, and dynamic spectra come in.
+
+The big conceptual win is this:
+
+- dispersion mostly tracks integrated electron column density
+- scattering and scintillation track inhomogeneity and turbulence
+
+Those are related, but not the same.
+
+## Why this is still important in a modern workflow
+
+- Dedispersion is not optional bookkeeping. It determines whether a narrow pulse remains visible.
+- Scattering can broaden pulses even after you have handled dispersion correctly.
+- RM work links pulse polarisation to the Galactic magnetic field.
+- Dynamic spectra are not only diagnostic plots. They carry physical information.
+
+## From homogeneous plasma to turbulent screens
+
+The chapter earns its length by refusing to stop at the familiar DM definition. It first treats the interstellar medium as a cold ionised plasma and shows how dispersion and Faraday rotation emerge from propagation through that medium. That is the clean conceptual layer where you learn what DM and RM mean as line-of-sight integrals.
+
+Then it changes the model. The Galaxy is not a smooth plasma, so the chapter moves to turbulent structure and introduces scattering, scintillation, decorrelation bandwidth, and scintillation timescales. That shift is more than a technical detail. It explains why two lines of sight with similar DM can still behave very differently in practice. Dispersion tells you about total free-electron content; scattering tells you about irregularity, multi-path propagation, and the small-scale texture of the medium.
+
+## Why observers keep coming back to this chapter
+
+This is one of the most reusable chapters in the whole handbook because it feeds directly into decisions observers make. It helps explain why low-frequency work can be both rich and punishing, why dynamic spectra can reveal real physics rather than mere nuisance structure, and why distance estimates based on electron-density models remain model-dependent rather than exact.
+
+It also connects multiple observables that are often discussed separately. DM is not only a correction term for alignment. RM is not only a polarisation number. Scintillation is not only short-term variability. The chapter's real contribution is that it makes these parts legible as one propagation problem with several measurable consequences.
+
+## Best companion pages
+
+- [Observing Known Pulsars](./observing-known-pulsars) for where these quantities enter day-to-day analysis.
+- [Finding New Pulsars](./finding-new-pulsars) for how propagation controls search sensitivity.
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa) for the shorter operational version.

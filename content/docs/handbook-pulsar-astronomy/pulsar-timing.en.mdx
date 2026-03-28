@@ -1,0 +1,64 @@
+---
+title: Pulsar Timing
+description: Chapter 8 distilled into the logic of TOAs, Solar System corrections, binary timing, relativistic delays, and timing noise.
+---
+
+If one chapter in this book deserves to be read slowly, it is Chapter 8.
+
+This is where pulsar astronomy becomes precision inference.
+
+## The timing idea in one sentence
+
+Measure pulse arrival times precisely enough, compare them with a model, and use the residuals to infer spin, position, motion, orbit, and sometimes gravity itself.
+
+## Why arrival times are not local clock readings
+
+The chapter makes a point that every timing student has to internalise: a measured pulse time at the telescope is only the beginning. Before it becomes physically useful, it has to be related to a consistent reference frame and timing standard.
+
+That is why barycentric corrections sit at the heart of pulsar timing.
+
+## What the chapter covers especially well
+
+- template matching and TOA estimation
+- clock and frequency standards
+- barycentric corrections
+- solitary-pulsar timing
+- binary timing and delay terms
+- post-Keplerian parameters
+- timing noise
+
+For binary systems, the chapter is especially valuable because it shows how orbital geometry and relativistic effects appear as timing signatures rather than as abstract textbook terms.
+
+## The derived-parameter layer
+
+Timing keeps returning to the same spin observables:
+
+$$
+\dot E \propto \frac{\dot P}{P^3},
+\qquad
+\tau_c = \frac{P}{2\dot P}
+$$
+
+But in timing, these are only part of the story. Residual structure can also encode astrometry, parallax, orbital evolution, Shapiro delay, and other relativistic effects.
+
+## The measurement chain is longer than one TOA
+
+Chapter 8 has real body because it spends time on the full chain from profile to inference. A TOA is not just a timestamp pulled off an observation. It depends on profile stability, template construction, signal-to-noise ratio, clock standards, dispersion corrections, and the quality of the Solar-System ephemeris used to move from the observatory to the Solar System barycentre.
+
+That is why the chapter lingers on template matching and time standards before it gets to the glamour of relativistic binaries. If the upstream timing chain is sloppy, the downstream physics is contaminated. The chapter's discipline is to show that precision timing is an accumulation of carefully controlled corrections, not a single clever fit at the end.
+
+## Why binary timing changed the field
+
+The binary sections are where the chapter becomes much more than a TOA tutorial. Once Keplerian terms are in place, additional timing delays turn orbital geometry and gravity into measurable structure in the residuals. Römer, Einstein, and Shapiro delays are not presented as abstract textbook names; they are observable timing signatures. Post-Keplerian parameters then become the bridge from measured delays to masses and gravity tests.
+
+This is also where the chapter clarifies a distinction that matters elsewhere in the docs: PSRUI and similar tools can help you clean, inspect, and prepare profiles, but full timing inference belongs to specialised timing packages because the model space is intrinsically large and physically coupled. The chapter explains that boundary rather than merely asserting it.
+
+## Why this matters for the docs
+
+PSRUI can help get data into a shape where TOAs and profile checks make sense. Full timing inference still belongs to tools like `tempo2`, but this chapter explains why that boundary exists and what lives beyond it.
+
+## Read alongside
+
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- [Pulsars as Physical Tools](./pulsars-as-physical-tools)
+- [Theoretical Background](./theoretical-background)

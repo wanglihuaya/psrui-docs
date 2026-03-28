@@ -1,31 +1,35 @@
-import { createMDX } from 'fumadocs-mdx/next';
+import { createMDX } from "fumadocs-mdx/next";
 
-import('@opennextjs/cloudflare').then((mod) =>
+import("@opennextjs/cloudflare").then((mod) =>
   mod.initOpenNextCloudflareForDev(),
 );
 
 const withMDX = createMDX();
-const defaultLanguage = 'zh';
-const markdownAcceptPattern = '.*(?:text/plain|text/markdown|text/x-markdown).*';
+const defaultLanguage = "zh";
+const markdownAcceptPattern =
+  ".*(?:text/plain|text/markdown|text/x-markdown).*";
 
 /** @type {import('next').NextConfig} */
 const config = {
-  distDir: process.env.NEXT_DIST_DIR ?? '.next',
-  serverExternalPackages: ['@takumi-rs/image-response'],
+  distDir: process.env.NEXT_DIST_DIR ?? ".next",
+  serverExternalPackages: ["@takumi-rs/image-response"],
   reactStrictMode: true,
   turbopack: {
     root: process.cwd(),
+  },
+  logging: {
+    browserToTerminal: true,
   },
   async redirects() {
     return [
       {
         source: `/${defaultLanguage}`,
-        destination: '/',
+        destination: "/",
         permanent: true,
       },
       {
         source: `/${defaultLanguage}/:path*`,
-        destination: '/:path*',
+        destination: "/:path*",
         permanent: true,
       },
     ];
@@ -33,8 +37,8 @@ const config = {
   async rewrites() {
     const markdownHeader = [
       {
-        type: 'header',
-        key: 'accept',
+        type: "header",
+        key: "accept",
         value: markdownAcceptPattern,
       },
     ];
@@ -42,24 +46,24 @@ const config = {
     return {
       beforeFiles: [
         {
-          source: '/docs',
+          source: "/docs",
           has: markdownHeader,
-          destination: '/llms.mdx/docs/content.md',
+          destination: "/llms.mdx/docs/content.md",
         },
         {
-          source: '/docs/:slug*',
+          source: "/docs/:slug*",
           has: markdownHeader,
-          destination: '/llms.mdx/docs/:slug*/content.md',
+          destination: "/llms.mdx/docs/:slug*/content.md",
         },
         {
-          source: '/:lang/docs',
+          source: "/:lang/docs",
           has: markdownHeader,
-          destination: '/:lang/llms.mdx/docs/content.md',
+          destination: "/:lang/llms.mdx/docs/content.md",
         },
         {
-          source: '/:lang/docs/:slug*',
+          source: "/:lang/docs/:slug*",
           has: markdownHeader,
-          destination: '/:lang/llms.mdx/docs/:slug*/content.md',
+          destination: "/:lang/llms.mdx/docs/:slug*/content.md",
         },
       ],
     };

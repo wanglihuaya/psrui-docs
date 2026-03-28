@@ -1,0 +1,83 @@
+---
+title: Chapter 11. Pulsars and the Interstellar Medium
+description: Use dispersion, Faraday rotation, scintillation, and scattering to turn pulsars from the object of study into probes of the medium between the stars.
+---
+
+The final chapter performs a beautiful reversal of perspective. For most of the previous ten chapters, pulsars are the objects being studied. Here they become narrow probe signals passing through the Galaxy.
+
+![Distance estimation from neutral-hydrogen absorption](/pulsar-physics/ch11-hi-absorption-distance.jpg)
+
+The book begins with neutral-hydrogen absorption as an example, showing that pulsar distances are not always measured directly. They often have to be inferred by combining propagation effects with Galactic-structure models.
+
+## Why pulsars are especially good probes of the interstellar medium
+
+The reason is not merely that they are bright. The key is that they emit narrow pulses with built-in time structure. As long as propagation effects across frequency, polarization, or timescale can be measured, some property of the material along the line of sight can be inferred.
+
+That makes pulsars naturally useful for studying:
+
+- the distribution of free electrons
+- the Galactic magnetic field
+- inhomogeneity in the medium
+- scattering screens and scintillation structure
+
+## Why DM is the most direct ruler
+
+Dispersion measure is defined as:
+
+$$
+\mathrm{DM} = \int_0^d n_e\,dl
+$$
+
+It tells us the column density of free electrons along the line of sight. By comparing pulse arrival times at different frequencies, we can measure DM directly. A propagation effect that at first looks like contamination then becomes a primary tool for estimating distance and building electron-density models.
+
+That is exactly why DM is both something you must correct during processing and one of the most information-rich observables in the data.
+
+If an electron-density model is available, the distance estimate can be written roughly as:
+
+$$
+d \approx \frac{\mathrm{DM}}{\langle n_e \rangle}
+$$
+
+## Why Faraday rotation brings in magnetic fields too
+
+If the pulsar signal has intrinsic linear polarization, then after passing through a magnetised plasma its polarization position angle rotates. Combining the rotation measure with DM lets us estimate the magnitude and sign of the average line-of-sight magnetic field:
+
+$$
+\theta = \mathrm{RM}\,\lambda^2
+$$
+
+$$
+\mathrm{RM} = 0.81 \int_0^d n_e B_{\parallel}\,dl,
+\qquad
+\frac{\mathrm{RM}}{\mathrm{DM}} = 0.81 \left\langle B_{\parallel} \right\rangle
+$$
+
+So pulsars tell us not only how many electrons lie along the path, but also what the large-scale field direction is in the medium those electrons occupy.
+
+## Why scintillation and scattering show that the medium is not smooth
+
+The book ends by stressing that the interstellar medium is not a uniform transparent sheet. It is full of irregular structure, and those structures produce:
+
+- intensity scintillation
+- pulse-profile broadening
+- drifting and striping in dynamic spectra
+
+![Pulse broadening caused by interstellar scattering](/pulsar-physics/ch11-scattering-broadening.jpg)
+
+These effects can look like nuisances during processing, but physically they are windows into the size of scattering screens and the turbulent structure of the medium.
+
+## Why this chapter is especially close to PSRUI
+
+If you were to pick the chapter in the whole book that is most tightly connected to what appears in the GUI, this one would be near the top. Many features that show up during practical data work are explained here:
+
+- misalignment across frequency corresponds to dispersion
+- broader low-frequency profiles correspond to scattering
+- polarization position-angle rotation corresponds to Faraday effects
+- slow intensity modulation corresponds to scintillation
+
+So pulsar data processing is not only about removing interstellar effects. Very often it is also about reading the Galaxy back out of those same effects.
+
+Continue with:
+
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- [RFI and Calibration](../pulsar-basics/rfi-calibration)

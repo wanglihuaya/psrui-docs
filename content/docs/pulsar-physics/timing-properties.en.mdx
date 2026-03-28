@@ -1,0 +1,79 @@
+---
+title: Chapter 4. Timing Properties of Pulsar Pulses
+description: Use period, period derivative, binaries, timing noise, and glitches to see why measuring pulse arrival times opens up an entire physical parameter set.
+---
+
+This is the chapter that most strongly treats pulsars as clocks. It shows that pulsar research is not only about the shape of an average pulse, but also about tracking when each pulse arrives over long time baselines.
+
+![Orbital decay of a double-neutron-star system and the general-relativistic prediction](/pulsar-physics/ch4-binary-decay.jpg)
+
+The figure shows the classic result for the orbital decay of PSR1913+16. It turned arrival-time measurements from a tool of astronomical inference into a direct experimental probe of gravitational theory.
+
+## Why TOA is central to pulsar research
+
+Once pulse arrival times are stable enough, they let us measure much more than a single period:
+
+- rotation period $P$
+- period derivative $\dot P$
+- binary orbital parameters
+- position and proper motion
+- dispersion measure and its variations
+
+The book's main point is that a pulsar is not just one more periodic source. It is one of the rare targets for which dynamics, propagation effects, and clock stability can all be modelled inside the same data framework.
+
+## Why pulsar binaries emerged from "irregular periods"
+
+The discovery of PSR1913+16 is almost a tutorial in timing analysis. A measured period that sometimes looks longer and sometimes shorter does not necessarily mean the source is erratic. It can mean the signal is being modulated by orbital motion. With continuous monitoring, the orbital period and Doppler modulation quickly become recoverable.
+
+That is why, in modern workflows, any apparently unstable period should not be dismissed as bad data too early. It may indicate:
+
+- binary orbital effects
+- incomplete Earth-motion corrections
+- a timing model that has not yet been fitted properly
+
+## Why the observer is not an inertial reference frame
+
+The book explicitly discusses the effect of Earth's orbital motion on TOAs. Conceptually this matters a great deal: a pulse arrival time is not just the local reading of the telescope clock. It only becomes suitable for timing analysis after reference-frame corrections are applied.
+
+$$
+t_c = A_E \cos\!\left(\omega_E t - \beta\right)\cos \lambda
+$$
+
+with $A_E \approx 500\,\mathrm{s}$, the characteristic light-travel time from the Sun to Earth.
+
+So any TOA workflow naturally contains two layers of correction:
+
+- transform the observing time into the appropriate reference frame
+- then interpret the remaining structure with the pulsar's own rotation and orbital model
+
+That is also why PSRUI currently focuses on TOA extraction and residual previews, while full timing analysis still belongs to tools such as `tempo2`.
+
+## Why timing noise and glitches matter
+
+Pulsars are often described as astronomical clocks, but the chapter also reminds us that they are not perfectly smooth clocks. The book highlights two important departures:
+
+- timing noise: slow, long-term, quasi-random wander
+- glitches: sudden spin-up events followed by partial recovery
+
+These effects imply that neutron stars are not rigid solid bodies. Their interiors likely involve superfluid components, crustal structure, and angular-momentum exchange.
+
+For glitch amplitudes, the book gives a typical order of magnitude:
+
+$$
+\frac{\Delta P}{P} \sim 10^{-10} - 10^{-6}
+$$
+
+![Long-term timing-noise observations of a millisecond pulsar](/pulsar-physics/ch4-msp-timing-noise.jpg)
+
+Millisecond pulsars matter so much partly because their timing noise is usually lower and their stability higher, making them especially valuable for precision timing.
+
+## How this maps onto the docs workflow
+
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa) covers the processing chain before timing begins.
+- This chapter explains how extracted TOAs become physical parameters.
+- If a residual preview still shows coherent structure, that usually means the model has not fully absorbed reference-frame, orbital, or template-matching effects.
+
+Continue with:
+
+- [Chapter 5. Spin-down Power and the Magnetic Dipole Model](./spin-down-dipole)
+- [pat / pac](../toolchain/pat-pac)

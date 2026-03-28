@@ -1,0 +1,55 @@
+---
+title: Observing Known Pulsars
+description: Chapter 7 reorganised around folding, refinement, calibration, observing modes, and interference control.
+---
+
+Once a pulsar is already known, the workflow changes. The problem is no longer "is there a signal here at all?" but "how do we measure it cleanly and repeatedly?"
+
+That is the territory of Chapter 7.
+
+## The chapter's practical center
+
+The chapter revolves around folding. Once you have a decent ephemeris, folding aligns the signal in rotational phase and makes weak periodic structure measurable.
+
+From there, the workflow becomes a sequence of refinements:
+
+- improve the spin period
+- improve the dispersion measure
+- improve the sky position when needed
+- calibrate flux density and polarisation
+- choose observing modes that match the science target
+
+## Why calibration gets real here
+
+This chapter is one of the book's strongest links to actual analysis. It treats flux calibration and polarisation calibration as necessary parts of measurement, not optional polish.
+
+That is especially important because many downstream interpretations depend on whether profile shapes, Stokes parameters, or phase-resolved behaviour are trustworthy.
+
+## Why this still matters
+
+Modern software stacks look different, but the questions are the same:
+
+- is the fold aligned correctly?
+- is the DM good enough?
+- are the intensity and polarisation scales meaningful?
+- is a feature astrophysical, instrumental, or interference?
+
+## What changes after discovery
+
+A useful strength of Chapter 7 is that it shows how different "observing a known pulsar" is from "finding a pulsar in the first place." Detection is no longer the main bottleneck. Precision is. Once the source is established, the observing problem becomes one of phase connection, parameter refinement, and trustworthy calibration. That is why folding sits at the centre of the chapter rather than at the end of it.
+
+The chapter then adds the practical layers that make measurements interpretable: refining period and DM, improving position when needed, handling orbital information for binaries, and choosing observing modes that match the science goal. Those modes are not interchangeable. A setup chosen for integrated timing may be poor for single-pulse phenomenology, while a setup optimised for polarimetry or scintillation work demands different care in calibration and frequency handling.
+
+## Calibration and diagnostics are part of the science
+
+What makes this chapter feel like a real observing guide rather than an outline is that it treats calibration and interference control as first-class topics. Flux density estimation, polarisation calibration, dynamic spectra, Faraday rotation, and neutral-hydrogen distance work all appear because the pulse profile is only the beginning of the measurement. A pulsar observation becomes scientifically useful when the profile is tied to a physical scale, a propagation interpretation, or a timing model.
+
+That broader measurement view is one of the best bridges between handbook-style observing and present-day analysis software.
+
+## Closest companions in this docs site
+
+- [RFI and Calibration](../pulsar-basics/rfi-calibration)
+- [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- [Pulsar Timing](./pulsar-timing)
+
+Together, those pages give the short operational version and the broader handbook version of the same measurement chain.

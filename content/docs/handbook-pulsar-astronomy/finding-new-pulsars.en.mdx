@@ -1,0 +1,53 @@
+---
+title: Finding New Pulsars
+description: Chapter 6 as a reviewed guide to de-dispersion, Fourier searches, binary searches, single-pulse work, and search strategy.
+---
+
+This chapter is the handbook's survey engine room.
+
+Even though software and hardware have improved enormously since 2005, the core search logic in this chapter is still the backbone of pulsar discovery work.
+
+## The standard search path
+
+The chapter's structure is still the right one:
+
+1. de-disperse trial time series
+2. search for periodicity
+3. recover sensitivity to narrow or accelerated signals
+4. inspect candidates
+5. reject interference and choose search strategy
+
+That order is not arbitrary. Each stage prepares the data for the next.
+
+## The enduring ideas
+
+- DM trial spacing is a sensitivity decision, not a cosmetic parameter.
+- Fourier-domain searches are powerful because a periodic signal concentrates information into harmonics.
+- Harmonic summing matters for narrow pulses.
+- Binary motion can smear power badly enough that a "standard" search misses real systems.
+- Single-pulse searches are not just an extra feature. They reveal sources periodicity searches can miss.
+
+## Why the standard pipeline has so many stages
+
+The original chapter makes a useful point that is easy to flatten into a checklist: each stage in a search pipeline prepares the data for the next kind of inference. Trial dedispersion does not only "correct" the data. It creates a family of hypotheses about line-of-sight electron content. Fourier analysis does not only compute a spectrum. It tests whether the dedispersed time series contains power organised into harmonics in the way a real pulsar should. Candidate folding then converts statistical peaks back into profile-like objects that a human or classifier can inspect.
+
+That staging explains why bad choices early in the pipeline echo later. A too-coarse DM grid broadens pulses before the FFT ever sees them. Inadequate low-frequency-noise removal leaves the periodicity search fighting the baseline. Weak harmonic summing penalises narrow pulses. A pipeline that looks computationally correct can therefore still be scientifically blunt.
+
+## Beyond isolated periodic sources
+
+The chapter also becomes more complete once you include what lies outside the simplest periodic search. Binary motion can smear signal power across Fourier bins, forcing acceleration or related searches. Time-domain methods such as fast-folding analysis can outperform FFT-based searches in parts of parameter space. Single-pulse searches matter because not every source is best described by a stable periodic train visible in the Fourier domain.
+
+Put differently, the chapter is not really about one algorithm. It is about matching the search method to the way a pulsar can hide. That is why it still reads as a serious guide rather than merely a historical survey write-up.
+
+## Why this chapter ages better than its examples
+
+Specific software packages and telescope surveys have changed. The logic of acceleration searches, RFI handling, and targeted versus wide-area search design has not.
+
+That is why the chapter still rewards careful reading, especially for readers who want to understand modern search pipelines rather than use them as black boxes.
+
+## Where it connects to current docs
+
+- `dedisperse`, Fourier candidates, and RFI rejection are all easier to understand once you see the full search pipeline in one place.
+- The chapter pairs naturally with [Interstellar Medium Effects](./interstellar-medium-effects), because DM and scattering set the search difficulty.
+- It also sets up [Observing Known Pulsars](./observing-known-pulsars), where the workflow changes from discovery to measurement.
+- It also clarifies why [Toolchain Reference](../toolchain) includes both search-era and timing-era software rather than a single linear tool list.

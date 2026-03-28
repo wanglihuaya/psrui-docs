@@ -1,0 +1,171 @@
+---
+title: Pulsar Data Analysis with PSRCHIVE
+description: Use the paper as a workflow map for PSRCHIVE core apps, RFI excision, calibration, TOA extraction, and what still sits outside PSRUI.
+---
+
+This page is a guided companion to the paper *Pulsar data analysis with PSRCHIVE*.
+
+It does not reproduce the whole paper line by line. Instead, it turns the paper into a practical map for this docs site, so you can jump between the original PSRCHIVE workflow, the concepts behind it, and the subset that PSRUI currently exposes.
+
+## Quick entry points
+
+- Want the archive-to-TOA mental model first: [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- Want the GUI mapping first: [Processing Inspector](../psrui-guide/processing-inspector)
+- Want the command-family overview first: [PSRCHIVE Overview](./psrchive-overview)
+- Want RFI and calibration concepts first: [RFI and Calibration](../pulsar-basics/rfi-calibration)
+
+## Paper structure at a glance
+
+The paper follows a fairly clear progression:
+
+1. introduce PSRCHIVE as an archive-centric analysis suite
+2. walk through the four core apps: `psredit`, `psrstat`, `psrsh`, and `psrplot`
+3. use those tools for RFI excision and calibration
+4. prepare a template profile, extract TOAs with `pat`, and evaluate them with `tempo2`
+5. finish with more advanced topics such as `pcm` and `psrpca`
+
+That makes it especially useful as a workflow paper, not just a command reference.
+
+## End-to-end workflow
+
+```text
+archive + metadata
+-> query / inspect / transform
+-> RFI excision
+-> calibration
+-> template preparation
+-> TOA extraction
+-> tempo2 residual analysis
+-> optional bias correction
+```
+
+For PSRUI users, the important takeaway is that the GUI currently lives mostly in the middle of this chain: preview, archive transforms, zapping, `pat` preview, and `pac` preview. The paper helps explain the larger CLI workflow around that middle layer.
+
+## Core applications: sections 2 to 5
+
+### `psredit`: query and modify metadata
+
+The paper starts with `psredit` because archive metadata is part of the workflow, not an afterthought. Source name, receiver parameters, observing setup, and data type all influence what comes next.
+
+Use this when you need to:
+
+- inspect archive attributes
+- batch-edit metadata
+- sort data into pulsar versus calibrator groups
+
+The closest conceptual companion in this docs site is [Interface and Data Flow](../psrui-guide/interface-data-flow), because PSRUI also treats metadata as part of session materialization rather than a separate export-only concern.
+
+### `psrstat`: compute derived quantities
+
+The paper then uses `psrstat` to answer questions like "what is the S/N?" and "how does that change with channel or sub-integration?"
+
+This is the bridge between raw inspection and decision-making:
+
+- quantify profile quality
+- evaluate expressions over archive data
+- drive plots or automated thresholds
+
+That pairs naturally with [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa), where the physical meaning of those quantities matters more than the exact command syntax.
+
+### `psrsh`: apply transformations as scripts
+
+`psrsh` is where PSRCHIVE stops being just a collection of standalone commands and starts looking like a composable processing language.
+
+In practice, this is the layer that ties together:
+
+- zapping
+- scrunching and other transforms
+- pre-processing before plotting or statistics
+- reusable command scripts
+
+This is also the best CLI analogue for PSRUI's non-destructive preview recipe. If you want the GUI equivalent, read [Processing Inspector](../psrui-guide/processing-inspector). If you want the command-level summary, read [paz / pam](./paz-pam).
+
+### `psrplot`: make the workflow visible
+
+The paper uses `psrplot` not just for publication graphics, but as the main diagnostic surface for checking whether a processing choice helped or hurt.
+
+That makes it a good companion to PSRUI's chart area:
+
+- phase versus frequency
+- Stokes views
+- quality checks before and after transforms
+
+If you are using PSRUI as your first stop and the CLI as your second stop, this is usually the moment where the two views line up most clearly.
+
+## RFI excision: section 6
+
+Section 6 is one of the most practical parts of the paper, because it separates several different RFI problems that are easy to blur together.
+
+- `zap edge`: remove known bad band edges
+- `zap median`: detect narrow-band interference
+- `zap mow`: detect impulsive interference
+- `psrzap`: interactively excise time-frequency regions
+
+This maps well onto the surrounding docs:
+
+- concepts: [RFI and Calibration](../pulsar-basics/rfi-calibration)
+- current GUI boundary: [paz / pam](./paz-pam)
+- current GUI behavior: [Processing Inspector](../psrui-guide/processing-inspector)
+
+> **PSRUI today**: the app currently exposes manual channel zapping in the waterfall view, but not the full family of automated `zap median`, `zap mow`, or `psrzap` workflows described in the paper.
+
+## Calibration: section 7
+
+The calibration section is where the paper moves beyond "clean the archive" and into "model the instrument."
+
+The sequence is roughly:
+
+1. inspect calibrator behavior
+2. derive flux-calibration assets with `fluxcal`
+3. fix receiver metadata when needed
+4. run first-order calibration with `pac`
+5. measure cross-coupling with `pcm`
+6. rerun `pac` using the MEM solution
+
+This is the right section to read when you need to understand why `pac` alone is only part of the story.
+
+Recommended jumps:
+
+- command summary: [pat / pac](./pat-pac)
+- concept refresher: [RFI and Calibration](../pulsar-basics/rfi-calibration)
+- broader observing context: [Instrumentation for Pulsar Observations](../handbook-pulsar-astronomy/instrumentation-for-pulsar-observations)
+
+> **PSRUI today**: PSRUI can preview `pac`-style calibration using existing assets, but it does not yet replace the full calibrator-database and MEM-building workflow shown here.
+
+## Arrival time estimation: section 8
+
+Section 8 connects profile preparation, template choice, `pat`, and `tempo2` into a single chain.
+
+The paper emphasizes a few ideas worth keeping together:
+
+- template quality matters
+- scalar and matrix template matching are different choices
+- calibration quality affects TOA quality
+- `tempo2` is the evaluation stage after TOAs are produced
+
+Recommended jumps:
+
+- concept model: [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- command summary: [pat / pac](./pat-pac)
+- next stage after TOAs: [tempo2](./tempo2)
+- wider timing background: [Pulsar Timing](../handbook-pulsar-astronomy/pulsar-timing)
+
+The paper also goes one step further with `psrpca`, which is useful to remember as an advanced bias-correction layer rather than part of the minimal TOA workflow.
+
+## How to use this page
+
+Use this page when you want to answer one of these questions:
+
+- "Which part of the paper corresponds to the GUI tab I am looking at?"
+- "Which PSRCHIVE command family sits behind this PSRUI workflow?"
+- "What comes before or after the step PSRUI currently exposes?"
+
+If you want full option-by-option CLI detail, go to the upstream manuals. If you want the most PSRUI-specific explanation, stay with the pages linked above.
+
+## Further reading
+
+- [PSRCHIVE Overview](./psrchive-overview)
+- [paz / pam](./paz-pam)
+- [pat / pac](./pat-pac)
+- [tempo2](./tempo2)
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)

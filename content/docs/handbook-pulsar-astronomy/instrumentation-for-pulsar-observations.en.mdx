@@ -1,0 +1,54 @@
+---
+title: Instrumentation for Pulsar Observations
+description: Chapter 5 rewritten as a practical bridge between observing hardware and the signals analysts actually receive.
+---
+
+Chapter 5 is where the book becomes unmistakably observational. It moves from pulsar ideas to the signal chain.
+
+## What the chapter is really about
+
+It is not a museum of old backends. It is a structured explanation of why pulsar instrumentation looks different from ordinary continuum radio astronomy.
+
+Pulsar backends must juggle four competing demands:
+
+- sensitivity
+- time resolution
+- bandwidth
+- the need to correct dispersion
+
+That tension is why incoherent and coherent de-dispersion systems both matter.
+
+## The key conceptual split
+
+Incoherent de-dispersion is easier and cheaper, but leaves residual channel smearing. Coherent de-dispersion is much more exact because it removes the transfer function of the interstellar plasma directly from baseband voltages, but it demands better sampling, more computation, and more disciplined instrumentation.
+
+This chapter is valuable because it makes those trade-offs explicit before the later chapters ask you to search or time real data.
+
+## Why it still reads well today
+
+Some hardware examples are now dated, but the core backend logic has not changed:
+
+- sampling choices shape the information you can recover later
+- polarimetry requires cleaner signal handling than total-intensity work
+- baseband recording opens the door to coherent de-dispersion and more flexible post-processing
+
+## Why it belongs in a PSRUI-adjacent docs site
+
+Most users see archive files, waterfall plots, profiles, and TOAs after acquisition has already happened. This chapter helps explain what information was preserved upstream and what was already lost before the file ever reached the GUI.
+
+## What the observing chain has to preserve
+
+Chapter 5 becomes much more substantial once you read it as a signal-preservation chapter rather than a hardware catalogue. The raw pulsar signal is weak, broadband, dispersed, and often highly sensitive to time resolution. Every acquisition choice therefore trades against later scientific flexibility. Channelisation, sample rate, quantisation, polarisation handling, and whether you keep voltages or detected powers all determine which corrections can be applied later and how cleanly.
+
+That is why the chapter spends real time on the distinction between incoherent and coherent dedispersion. Incoherent systems are simpler and cheaper, but they leave residual intra-channel smearing. Coherent systems require baseband voltages, Fourier-domain corrections, and much heavier computation, but they preserve the phase information needed for higher-fidelity timing and polarimetry.
+
+## Why software mattered even in 2005
+
+Another reason the chapter still feels relevant is that it already points toward software-defined backends. Baseband sampling, software filterbanks, on-line versus off-line processing, and the overlap-save logic of coherent dedispersion all anticipate the present-day idea that pulsar instrumentation is partly a computing architecture problem. The telescope collects the photons, but a large fraction of the scientifically decisive work happens in the digital chain.
+
+For readers using modern tools, that perspective is extremely helpful. It explains why some archives can support sharp profiles and detailed polarimetry while others cannot, and why file format alone never tells the whole story unless you also know what the backend chose to preserve.
+
+## Continue with
+
+- [Finding New Pulsars](./finding-new-pulsars) for survey pipelines built on these backends.
+- [Observing Known Pulsars](./observing-known-pulsars) for the analysis path after a source is already known.

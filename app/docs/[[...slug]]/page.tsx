@@ -1,8 +1,8 @@
-import { DocsPageContent } from '@/components/docs-page-content';
-import { i18n } from '@/lib/i18n';
-import { getPageImage, source } from '@/lib/source';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
+import { DocsPageContent } from "@/components/docs-page-content";
+import { i18n } from "@/lib/i18n";
+import { getPageImage, source } from "@/lib/source";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 export default async function Page({
   params,

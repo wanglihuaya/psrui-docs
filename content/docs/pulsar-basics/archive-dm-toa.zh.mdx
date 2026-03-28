@@ -1,18 +1,31 @@
 ---
 title: Archive、DM 与 TOA
-description: 把 archive 数据、色散、dedispersion、folding 与 TOA 提取连成一条理解链。
+description: 把 archive 数据、色散、dedispersion、folding、template matching 与 TOA 提取连成一条理解链。
 ---
 
 ## Archive 是什么
 
-在这里可以把 archive 理解成“已经过一定程度接收机/后端处理后，适合进入脉冲星分析链路的数据容器”。
+在 PSRUI 里可以先把 archive 理解成“已经完成望远镜后端采样、折叠或部分预处理后，适合继续分析的脉冲星数据容器”。
+
+它既不是最原始的 baseband，也不是最后的 timing result，而是介于两者之间、最适合做交互式检查和处理的数据形态。
 
 常见内容包括：
 
 - profile 数据
 - 频率通道信息
 - 子积分信息
-- 源名、望远镜、中心频率、带宽、DM 等元数据
+- 极化维度与 Stokes 相关信息
+- 源名、望远镜、中心频率、带宽、DM、ephemeris 等元数据
+
+## DM 到底表示什么
+
+DM 是视线方向上自由电子柱密度的积分量。直观上可以把它理解成“星际介质让不同频率信号产生传播时延的强弱刻度”。
+
+它为什么重要：
+
+- 高频和低频不会同时到达
+- 频带越宽、DM 越大，频率方向上的拖尾越明显
+- 如果不先处理这种传播延迟，后续 folding、template matching 和 TOA 都会变差
 
 ## DM 与 dedispersion
 
@@ -20,20 +33,38 @@ description: 把 archive 数据、色散、dedispersion、folding 与 TOA 提取
 
 如果不做 dedispersion，同一脉冲在频率方向上会被拖开，profile 对齐也会变差。
 
-这就是为什么 PSRUI 在 `Pam` 里把 `dedisperse` 作为高频操作之一。
+这就是为什么 PSRUI 在 `Pam` 里把 `dedisperse` 作为高频操作之一。它不是“锦上添花”的美化，而是后面很多定量分析的前提步骤。
 
 ## Folding 在做什么
 
 folding 会利用脉冲星周期，把周期性信号沿相位堆叠起来，让稳定成分更明显、随机噪声相对被压低。
 
-很多 profile 与 TOA 分析都默认建立在“已经折叠到合理相位结构”的数据上。
+很多 profile 与 TOA 分析都默认建立在“已经折叠到合理相位结构”的数据上。你在 GUI 里看到的平均脉冲，本质上就是大量单周期信号叠加后的结果。
 
 ## TOA 为什么需要 template
 
-TOA 并不是“找最大值所在时间”这么简单。
+TOA 不是“读取脉冲峰值出现在什么时候”这么直接。
 
-更常见的做法是用 template profile 与观测 profile 做匹配，再估计相位偏移和不确定度。PSRUI 当前的 TOA 工作流就是围绕 `pat` 做这件事。
+更常见的做法是：
+
+1. 先得到一个信噪比较高、相位结构稳定的 template profile。
+2. 再用观测 profile 和 template 做匹配，估计相位偏移。
+3. 把相位偏移换算成到达时间和不确定度。
+
+PSRUI 当前的 TOA 工作流就是围绕 `pat` 做这件事。GUI 帮你组织了输入、参数和结果预览，但物理上它仍然是在做 template matching。
+
+## 在 PSRUI 里应该怎样理解这一条链路
+
+- archive 决定了你手里到底是什么数据
+- DM / dedispersion 决定频率轴上的脉冲能否对齐
+- folding 决定平均脉冲是否足够清晰稳定
+- template matching 决定 TOA 是否可信
+- TOA 之后通常还需要进入更完整的 timing model 分析，例如 `tempo2`
 
 > **PSRUI 当前支持**：可以在 GUI 中选 template、跑 `pat`，并查看 visual residual preview。
 
-继续阅读：[pat / pac](../toolchain/pat-pac)
+## 继续阅读
+
+- [pat / pac](../toolchain/pat-pac)
+- [第 4 章 脉冲星脉冲的时间特性](../pulsar-physics/timing-properties)
+- [第 11 章 脉冲星与星际介质](../pulsar-physics/interstellar-medium-probe)

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/cn';
-import { gitConfig } from '@/lib/shared';
+import { cn } from "@/lib/cn";
+import { gitConfig } from "@/lib/shared";
 import {
   LanguageSelect,
   LanguageSelectText,
-} from 'fumadocs-ui/layouts/shared/slots/language-select';
-import type { ComponentProps } from 'react';
+} from "fumadocs-ui/layouts/shared/slots/language-select";
+import type { ComponentProps } from "react";
 
 const sidebarControlClassName =
-  'inline-flex items-center justify-center rounded-md text-sm font-medium text-fd-muted-foreground transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring hover:bg-fd-accent hover:text-fd-accent-foreground gap-1.5 p-1.5';
+  "inline-flex items-center justify-center rounded-md text-sm font-medium text-fd-muted-foreground transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fd-ring hover:bg-fd-accent hover:text-fd-accent-foreground gap-1.5 p-1.5";
 
 export function SidebarLanguageSelect(
   props: ComponentProps<typeof LanguageSelect>,
@@ -22,7 +22,7 @@ export function SidebarLanguageSelect(
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub repository"
-          className={cn(sidebarControlClassName, 'shrink-0')}
+          className={cn(sidebarControlClassName, "shrink-0")}
         >
           <svg
             role="img"

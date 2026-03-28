@@ -1,9 +1,9 @@
-import { DocsPageContent } from '@/components/docs-page-content';
-import { i18n } from '@/lib/i18n';
-import { getDocsUrl, isSupportedLanguage } from '@/lib/shared';
-import { getPageImage, source } from '@/lib/source';
-import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { DocsPageContent } from "@/components/docs-page-content";
+import { i18n } from "@/lib/i18n";
+import { getDocsUrl, isSupportedLanguage } from "@/lib/shared";
+import { getPageImage, source } from "@/lib/source";
+import type { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page({
   params,

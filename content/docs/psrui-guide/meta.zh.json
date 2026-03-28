@@ -1,4 +1,10 @@
 {
   "title": "PSRUI 使用",
-  "pages": ["index", "interface-data-flow", "processing-inspector", "batch-export", "capabilities-limitations"]
+  "pages": [
+    "index",
+    "interface-data-flow",
+    "processing-inspector",
+    "batch-export",
+    "capabilities-limitations"
+  ]
 }

@@ -1,9 +1,9 @@
-import { i18n } from '@/lib/i18n';
-import { appName, isSupportedLanguage } from '@/lib/shared';
-import { getPageImage, source } from '@/lib/source';
-import { ImageResponse } from '@takumi-rs/image-response';
-import { generate as DefaultImage } from 'fumadocs-ui/og/takumi';
-import { notFound } from 'next/navigation';
+import { i18n } from "@/lib/i18n";
+import { appName, isSupportedLanguage } from "@/lib/shared";
+import { getPageImage, source } from "@/lib/source";
+import { ImageResponse } from "@takumi-rs/image-response";
+import { generate as DefaultImage } from "fumadocs-ui/og/takumi";
+import { notFound } from "next/navigation";
 
 export const revalidate = false;
 
@@ -20,11 +20,15 @@ export async function GET(
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site={appName} />,
+    <DefaultImage
+      title={page.data.title}
+      description={page.data.description}
+      site={appName}
+    />,
     {
       width: 1200,
       height: 630,
-      format: 'webp',
+      format: "webp",
     },
   );
 }

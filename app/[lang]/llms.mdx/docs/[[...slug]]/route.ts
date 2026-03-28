@@ -1,7 +1,7 @@
-import { i18n } from '@/lib/i18n';
-import { isSupportedLanguage } from '@/lib/shared';
-import { getLLMText, getPageMarkdownUrl, source } from '@/lib/source';
-import { notFound } from 'next/navigation';
+import { i18n } from "@/lib/i18n";
+import { isSupportedLanguage } from "@/lib/shared";
+import { getLLMText, getPageMarkdownUrl, source } from "@/lib/source";
+import { notFound } from "next/navigation";
 
 export const revalidate = false;
 
@@ -19,7 +19,7 @@ export async function GET(
 
   return new Response(await getLLMText(page), {
     headers: {
-      'Content-Type': 'text/markdown',
+      "Content-Type": "text/markdown",
     },
   });
 }

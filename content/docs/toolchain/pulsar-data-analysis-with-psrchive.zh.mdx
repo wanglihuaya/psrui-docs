@@ -1,0 +1,171 @@
+---
+title: Pulsar data analysis with PSRCHIVE
+description: 把这篇论文当成一张工作流地图，串起 PSRCHIVE core apps、RFI excision、calibration、TOA 提取，以及 PSRUI 当前还没有覆盖到的部分。
+---
+
+这一页是对论文 *Pulsar data analysis with PSRCHIVE* 的站内导读。
+
+它不是逐段翻译整篇论文，而是把论文整理成适合本项目文档站的跳转页，帮助你在原始 PSRCHIVE 工作流、相关基础概念，以及 PSRUI 当前支持范围之间来回定位。
+
+## 快速入口
+
+- 想先建立 archive 到 TOA 的整体理解：[Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- 想先看 GUI 对应关系：[Processing Inspector](../psrui-guide/processing-inspector)
+- 想先看命令家族总览：[PSRCHIVE 概览](./psrchive-overview)
+- 想先补 RFI / calibration 基础：[RFI and Calibration](../pulsar-basics/rfi-calibration)
+
+## 论文结构速览
+
+这篇论文的推进顺序很清晰：
+
+1. 先把 PSRCHIVE 定位成一个 archive-centric 分析套件
+2. 再介绍四个 core apps：`psredit`、`psrstat`、`psrsh`、`psrplot`
+3. 用这些工具完成 RFI excision 与 calibration
+4. 准备 template profile，用 `pat` 提取 TOA，再交给 `tempo2` 分析
+5. 最后补充 `pcm`、`psrpca` 这类更进阶的话题
+
+因此它更像是一篇“工作流论文”，不只是命令参考手册。
+
+## 端到端链路
+
+```text
+archive + metadata
+-> query / inspect / transform
+-> RFI excision
+-> calibration
+-> template preparation
+-> TOA extraction
+-> tempo2 residual analysis
+-> optional bias correction
+```
+
+对 PSRUI 用户来说，最关键的理解是：GUI 目前主要位于这条链路的中间层，也就是 preview、archive transforms、zapping、`pat` preview、`pac` preview。论文的价值在于把这层前后更完整的 CLI 工作流补齐。
+
+## Core applications：第 2 到 5 节
+
+### `psredit`：查询和修改元数据
+
+论文先讲 `psredit`，因为 archive metadata 本身就是工作流的一部分，不是最后导出时才顺手看的附属信息。源名、receiver 参数、观测配置、数据类型都会影响后续处理。
+
+适合用它来做：
+
+- 查看 archive attributes
+- 批量修改 metadata
+- 把数据分成 pulsar / calibrator 等不同组
+
+站内最接近的配套阅读是 [Interface and Data Flow](../psrui-guide/interface-data-flow)，因为 PSRUI 也把 metadata 放在 session materialization 这条链路里，而不是只在导出时才处理。
+
+### `psrstat`：计算派生量
+
+接着论文用 `psrstat` 回答诸如 “S/N 是多少” 和 “它在不同 channel 或 sub-integration 上怎么变化” 这类问题。
+
+这一层连接的是“看数据”和“做决定”：
+
+- 量化 profile 质量
+- 对 archive 数据做表达式计算
+- 给绘图或自动阈值判断提供依据
+
+这里最适合联动阅读的是 [Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)，因为真正重要的不只是命令语法，还有这些量在物理上意味着什么。
+
+### `psrsh`：把变换串成脚本
+
+`psrsh` 让 PSRCHIVE 不再只是零散命令集合，而更像一门可组合的处理语言。
+
+它经常用来串起：
+
+- zapping
+- scrunch 等 archive transforms
+- plotting / statistics 之前的预处理
+- 可复用的处理脚本
+
+它也是 PSRUI 非破坏性 preview recipe 最接近的 CLI 对照物。想看 GUI 对应关系可以读 [Processing Inspector](../psrui-guide/processing-inspector)；想看命令层总结可以读 [paz / pam](./paz-pam)。
+
+### `psrplot`：把处理过程可视化
+
+论文里 `psrplot` 不只是用来出图，更是整个工作流里判断“这一步到底有没有帮上忙”的主要诊断界面。
+
+它和 PSRUI 图表区域最容易对上的部分包括：
+
+- phase versus frequency
+- Stokes views
+- 处理前后的质量检查
+
+如果你把 PSRUI 当作第一观察界面，把 CLI 当成第二处理界面，这通常是两者衔接最顺的一层。
+
+## RFI excision：第 6 节
+
+第 6 节是全篇最实用的部分之一，因为它把几类很容易混在一起的 RFI 问题拆开了。
+
+- `zap edge`：裁掉已知有问题的 band edges
+- `zap median`：检测 narrow-band interference
+- `zap mow`：检测 impulsive interference
+- `psrzap`：交互式剔除 time-frequency 区域
+
+与站内其他页面的对应关系：
+
+- 概念层：[RFI and Calibration](../pulsar-basics/rfi-calibration)
+- 命令层：[paz / pam](./paz-pam)
+- GUI 边界：[Processing Inspector](../psrui-guide/processing-inspector)
+
+> **PSRUI 当前支持**：应用目前主要暴露 waterfall 里的手动 channel zapping，并没有把论文中 `zap median`、`zap mow`、`psrzap` 这一整套自动/交互 RFI 工作流完整做进 GUI。
+
+## Calibration：第 7 节
+
+到了 calibration，论文的重点就从“清洗 archive”转向“建模 instrument response”了。
+
+它的大致顺序是：
+
+1. 先看 calibrator 的表现
+2. 用 `fluxcal` 生成 flux calibration 资产
+3. 必要时修正 receiver metadata
+4. 用 `pac` 做 ideal feed 假设下的一阶 calibration
+5. 用 `pcm` 测量 cross-coupling
+6. 再基于 MEM solution 重新跑 `pac`
+
+如果你想弄清楚为什么 “能跑 `pac`” 还不等于 “已经完成 calibration workflow”，这一节非常关键。
+
+推荐跳转：
+
+- 命令总览：[pat / pac](./pat-pac)
+- 概念补充：[RFI and Calibration](../pulsar-basics/rfi-calibration)
+- 更宽的观测背景：[Instrumentation for Pulsar Observations](../handbook-pulsar-astronomy/instrumentation-for-pulsar-observations)
+
+> **PSRUI 当前支持**：PSRUI 可以基于已有资产做 `pac` 风格的 preview，但还不能替代论文里这套完整的 calibrator database 与 MEM solution 构建流程。
+
+## Arrival time estimation：第 8 节
+
+第 8 节把 template 准备、`pat`、`tempo2` 这些环节真正串成了一条链。
+
+论文特别强调了几件需要放在一起理解的事：
+
+- template 质量会直接影响 TOA 质量
+- scalar 与 matrix template matching 是不同选择
+- calibration 质量会继续影响 TOA 质量
+- `tempo2` 是 TOA 之后的分析阶段，不是 `pat` 的同义词
+
+推荐跳转：
+
+- 概念模型：[Archive, DM, and TOA](../pulsar-basics/archive-dm-toa)
+- 命令总览：[pat / pac](./pat-pac)
+- TOA 之后的下一步：[tempo2](./tempo2)
+- 更完整的 timing 背景：[Pulsar Timing](../handbook-pulsar-astronomy/pulsar-timing)
+
+论文还进一步介绍了 `psrpca`，更适合把它理解成高级 bias correction 层，而不是最小可用 TOA 工作流的一部分。
+
+## 这一页怎么用
+
+当你想回答下面这些问题时，就适合先回到这一页：
+
+- “论文里的哪一段对应我现在看到的 GUI tab？”
+- “这个 PSRUI 工作流背后实际是哪一类 PSRCHIVE 命令？”
+- “PSRUI 当前暴露的这一步，前后还缺了哪些 CLI 环节？”
+
+如果你要看逐项参数级别的 CLI 细节，还是应该回到上游 manuals；如果你要看最贴近 PSRUI 的解释，就沿着这页给出的站内链接继续走。
+
+## 延伸阅读
+
+- [PSRCHIVE 概览](./psrchive-overview)
+- [paz / pam](./paz-pam)
+- [pat / pac](./pat-pac)
+- [tempo2](./tempo2)
+- [PSRCHIVE Manuals](https://psrchive.sourceforge.net/manuals/)

@@ -1,5 +1,5 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, docsRoute, getLocalizedPath } from './shared';
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { appName, docsRoute, getLocalizedPath } from "./shared";
 
 export function baseOptions(locale?: string): BaseLayoutProps {
   return {

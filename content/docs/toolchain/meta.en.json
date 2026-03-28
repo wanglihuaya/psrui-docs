@@ -1,4 +1,12 @@
 {
   "title": "Toolchain Reference",
-  "pages": ["index", "psrchive-overview", "paz-pam", "pat-pac", "tempo2", "dspsr"]
+  "pages": [
+    "index",
+    "psrchive-overview",
+    "pulsar-data-analysis-with-psrchive",
+    "paz-pam",
+    "pat-pac",
+    "tempo2",
+    "dspsr"
+  ]
 }

@@ -1,6 +1,6 @@
-import { getMDXComponents } from '@/components/mdx';
-import { getGitHubFileUrl } from '@/lib/shared';
-import { getPageMarkdownUrl, source } from '@/lib/source';
+import { getMDXComponents } from "@/components/mdx";
+import { getGitHubFileUrl } from "@/lib/shared";
+import { getPageMarkdownUrl, source } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
@@ -8,8 +8,8 @@ import {
   DocsTitle,
   MarkdownCopyButton,
   ViewOptionsPopover,
-} from 'fumadocs-ui/layouts/docs/page';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
+} from "fumadocs-ui/layouts/docs/page";
+import { createRelativeLink } from "fumadocs-ui/mdx";
 
 type DocsPageData = NonNullable<ReturnType<typeof source.getPage>>;
 
@@ -20,7 +20,9 @@ export function DocsPageContent({ page }: { page: DocsPageData }) {
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
+      <DocsDescription className="mb-0">
+        {page.data.description}
+      </DocsDescription>
       <div className="flex flex-row items-center gap-2 border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover
