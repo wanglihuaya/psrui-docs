@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PsrcatHomeChart } from "@/components/psrcat-home-chart";
+import { PsrcatHomeChartShell } from "@/components/psrcat-home-chart-shell";
 
 export default function HomePage() {
   return (
@@ -38,7 +38,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <PsrcatHomeChart />
+      <PsrcatHomeChartShell />
     </div>
   );
 }
