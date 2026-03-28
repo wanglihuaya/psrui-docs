@@ -1,3 +1,7 @@
+import {
+  SidebarLanguageSelect,
+  SidebarLanguageSelectText,
+} from '@/components/sidebar-language-select';
 import { i18n, i18nUI } from '@/lib/i18n';
 import { baseOptions } from '@/lib/layout.shared';
 import { isSupportedLanguage } from '@/lib/shared';
@@ -21,6 +25,12 @@ export default async function Layout({
     <RootProvider i18n={i18nUI.provider(lang)}>
       <DocsLayout
         tree={source.getPageTree(lang)}
+        slots={{
+          languageSelect: {
+            root: SidebarLanguageSelect,
+            text: SidebarLanguageSelectText,
+          },
+        }}
         {...baseOptions(lang)}
       >
         {children}

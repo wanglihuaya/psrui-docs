@@ -7,7 +7,7 @@ export const docsContentRoute = '/llms.mdx/docs';
 
 export const gitConfig = {
   branch: 'main',
-  repoUrl: undefined as string | undefined,
+  repoUrl: 'https://github.com/wanglihuaya/psrui-docs',
 };
 
 export function getSiteUrl(): string {
