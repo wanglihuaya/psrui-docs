@@ -48,6 +48,26 @@ npm run lint
 - `next typegen`
 - `tsc --noEmit`
 
+## Cloudflare 部署
+
+这个仓库已经按 Cloudflare Workers + OpenNext 的官方接入方式补齐了部署配置。
+
+首次使用前，先确认你已经登录 Wrangler：
+
+```bash
+npx wrangler whoami
+```
+
+本地开发和 Cloudflare 预览的分工如下：
+
+- `npm run dev`：继续使用 Next.js 开发服务器，适合日常写文档和调样式
+- `npm run preview`：用 OpenNext 构建后，通过 Workers 运行时本地预览，更接近线上环境
+- `npm run deploy`：构建并直接部署到 Cloudflare Workers
+- `npm run cf-typegen`：生成 `cloudflare-env.d.ts`，给后续绑定类型使用
+- `next.config.mjs` 里的 `redirects` 和 `rewrites` 已接管默认语言隐藏与 Markdown 协商，避免依赖 Cloudflare 当前不支持的 Node Proxy
+
+如果后面需要加 R2、D1、KV 等 Cloudflare 绑定，再按需扩展 [`wrangler.jsonc`](./wrangler.jsonc) 和本地 `.dev.vars` 即可。
+
 ## 内容结构
 
 文档内容位于 [`content/docs`](./content/docs)。
@@ -80,8 +100,10 @@ content/docs/
 | [`app/docs`](./app/docs) | 中文默认 docs 路由 |
 | [`app/[lang]/docs`](./app/[lang]/docs) | 非默认语言 docs 路由 |
 | [`app/api/search/route.ts`](./app/api/search/route.ts) | 搜索接口与 locale tokenizer 配置 |
-| [`proxy.ts`](./proxy.ts) | 默认语言隐藏与 Markdown/LLM 内容重写 |
+| [`next.config.mjs`](./next.config.mjs) | Next.js 构建配置，以及默认语言重定向与 Markdown 重写规则 |
 | [`source.config.ts`](./source.config.ts) | MDX collection 配置 |
+| [`wrangler.jsonc`](./wrangler.jsonc) | Cloudflare Workers 部署配置 |
+| [`open-next.config.ts`](./open-next.config.ts) | OpenNext Cloudflare 适配器配置 |
 
 ## README 适用范围
 
