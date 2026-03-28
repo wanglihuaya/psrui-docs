@@ -1,9 +1,9 @@
-import { i18n } from "@/lib/i18n";
-import { appName, isSupportedLanguage } from "@/lib/shared";
-import { getPageImage, source } from "@/lib/source";
 import { ImageResponse } from "@takumi-rs/image-response";
 import { generate as DefaultImage } from "fumadocs-ui/og/takumi";
 import { notFound } from "next/navigation";
+import { i18n } from "@/lib/i18n";
+import { appName, isSupportedLanguage } from "@/lib/shared";
+import { getPageImage, source } from "@/lib/source";
 
 export const revalidate = false;
 
@@ -37,8 +37,17 @@ export function generateStaticParams() {
   return source
     .generateParams()
     .filter((params) => params.lang !== i18n.defaultLanguage)
-    .map(({ lang, slug }) => ({
-      lang,
-      slug: getPageImage(source.getPage(slug, lang)!).segments,
-    }));
+    .map(({ lang, slug }) => {
+      const page = source.getPage(slug, lang);
+      if (!page) {
+        throw new Error(
+          `Missing localized OG page for ${lang}:${slug?.join("/") ?? "index"}`,
+        );
+      }
+
+      return {
+        lang,
+        slug: getPageImage(page).segments,
+      };
+    });
 }

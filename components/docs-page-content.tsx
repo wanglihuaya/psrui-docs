@@ -1,6 +1,3 @@
-import { getMDXComponents } from "@/components/mdx";
-import { getGitHubFileUrl } from "@/lib/shared";
-import { getPageMarkdownUrl, source } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
@@ -10,6 +7,9 @@ import {
   ViewOptionsPopover,
 } from "fumadocs-ui/layouts/docs/page";
 import { createRelativeLink } from "fumadocs-ui/mdx";
+import { getMDXComponents } from "@/components/mdx";
+import { getGitHubFileUrl } from "@/lib/shared";
+import { getPageMarkdownUrl, source } from "@/lib/source";
 
 type DocsPageData = NonNullable<ReturnType<typeof source.getPage>>;
 

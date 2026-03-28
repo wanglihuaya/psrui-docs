@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation";
 import { i18n } from "@/lib/i18n";
 import { getLLMText, getPageMarkdownUrl, source } from "@/lib/source";
-import { notFound } from "next/navigation";
 
 export const revalidate = false;
 
@@ -23,8 +23,14 @@ export function generateStaticParams() {
   return source
     .generateParams()
     .filter((params) => params.lang === i18n.defaultLanguage)
-    .map(({ slug }) => ({
-      slug: getPageMarkdownUrl(source.getPage(slug, i18n.defaultLanguage)!)
-        .segments,
-    }));
+    .map(({ slug }) => {
+      const page = source.getPage(slug, i18n.defaultLanguage);
+      if (!page) {
+        throw new Error(`Missing page for slug: ${slug?.join("/") ?? "index"}`);
+      }
+
+      return {
+        slug: getPageMarkdownUrl(page).segments,
+      };
+    });
 }

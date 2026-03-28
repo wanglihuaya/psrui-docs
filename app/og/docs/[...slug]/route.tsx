@@ -1,9 +1,9 @@
+import { ImageResponse } from "@takumi-rs/image-response";
+import { generate as DefaultImage } from "fumadocs-ui/og/takumi";
+import { notFound } from "next/navigation";
 import { i18n } from "@/lib/i18n";
 import { appName } from "@/lib/shared";
 import { getPageImage, source } from "@/lib/source";
-import { notFound } from "next/navigation";
-import { ImageResponse } from "@takumi-rs/image-response";
-import { generate as DefaultImage } from "fumadocs-ui/og/takumi";
 
 export const revalidate = false;
 
@@ -33,7 +33,16 @@ export function generateStaticParams() {
   return source
     .generateParams()
     .filter((params) => params.lang === i18n.defaultLanguage)
-    .map(({ slug }) => ({
-      slug: getPageImage(source.getPage(slug, i18n.defaultLanguage)!).segments,
-    }));
+    .map(({ slug }) => {
+      const page = source.getPage(slug, i18n.defaultLanguage);
+      if (!page) {
+        throw new Error(
+          `Missing OG page for slug: ${slug?.join("/") ?? "index"}`,
+        );
+      }
+
+      return {
+        slug: getPageImage(page).segments,
+      };
+    });
 }

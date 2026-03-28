@@ -1,12 +1,12 @@
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { RootProvider } from "fumadocs-ui/provider/next";
 import {
   SidebarLanguageSelect,
   SidebarLanguageSelectText,
 } from "@/components/sidebar-language-select";
 import { i18n, i18nUI } from "@/lib/i18n";
-import { source } from "@/lib/source";
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { baseOptions } from "@/lib/layout.shared";
-import { RootProvider } from "fumadocs-ui/provider/next";
+import { source } from "@/lib/source";
 
 export default function Layout({ children }: LayoutProps<"/docs">) {
   return (
@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps<"/docs">) {
             text: SidebarLanguageSelectText,
           },
         }}
-        {...baseOptions(i18n.defaultLanguage)}
+        {...baseOptions("docs")}
       >
         {children}
       </DocsLayout>

@@ -1,11 +1,17 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { appName, docsRoute, getLocalizedPath } from "./shared";
+import { appName } from "./shared";
 
-export function baseOptions(locale?: string): BaseLayoutProps {
+type BaseOptionsMode = "home" | "docs";
+
+export function baseOptions(_mode: BaseOptionsMode = "docs"): BaseLayoutProps {
   return {
     nav: {
       title: appName,
-      url: getLocalizedPath(docsRoute, locale),
+      url: "/",
+    },
+    links: undefined,
+    themeSwitch: {
+      enabled: true,
     },
   };
 }

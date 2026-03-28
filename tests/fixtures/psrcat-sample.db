@@ -1,0 +1,27 @@
+# Catalogue produced using psrcatV2_V1 from the version 2 database
+
+@
+PSRJ J0001+0001
+P0 1.0
+P1 1e-15
+DM 12.5
+
+@
+PSRJ J0002+0002
+PSRB B0002+00
+F0 500
+F1 -1e-13
+PB 0.5
+DM 4.2
+
+@
+PSRJ J0003+0003
+P0 0.5
+P1 1e-16
+PB 2.0
+
+@
+PSRJ J0004+0004
+P0 5
+P1 1e-11
+TYPE AXP

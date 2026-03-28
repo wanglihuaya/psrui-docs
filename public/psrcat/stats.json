@@ -1,0 +1,11 @@
+{
+  "catalogue": "PSRCAT v2 database",
+  "generatedAt": "2026-03-28T13:33:23.209Z",
+  "total": 4351,
+  "classes": {
+    "Normal": 3434,
+    "MSP": 804,
+    "Binary": 88,
+    "Magnetar": 25
+  }
+}
